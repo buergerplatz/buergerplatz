@@ -1,891 +1,624 @@
 <!DOCTYPE html>
 <!--
-  Bürgerplatz Föhr · 30.04.2026 · jdkoehler.com
+  Bürgerplatz
 
-  Der Staat hatte Verfahren. Jetzt bekommt er wieder einen Platz.
+  Was es nicht ist:
+    Keine Überwachung. Keine Empörung. Kein Tracking.
+    Kein Profil. Kein Algorithmus. Keine Konkurrenz.
+    Keine Reichweite. Keine Werbung. Kein Geschäftsmodell.
+    Keine Abhängigkeit.
 
-  Ein Schlüsselbund im Sand am Wyker Strand. Ein Hund ohne Halsband
-  auf dem Deich bei Nieblum. Die Fähre fällt aus, die Website zeigt
-  den Regelfahrplan. Drei Situationen. Null Formulare.
+  Was es ist:
+    Vertrauen. Freundlichkeit. Menschlich.
+    Nachbarschaft. Gleichberechtigt. Kooperation.
+    Öffentlichkeit. Gemeinwohl. Souveränität.
+    Unabhängigkeit.
 
-  Die Menschen gehen nicht zum Staat. Sie gehen zu Facebook.
-  Das funktioniert — meistens besser als die Verwaltung.
-  Genau das ist das Problem.
+  Der Bürger ist nicht das Produkt.
+  Der Platz gehört den Bürgern.
 
-  Habermas nannte es 1962 die bürgerliche Öffentlichkeit: der Raum,
-  in dem Themen sichtbar werden, bevor sie entschieden werden.
-  Kaffeehäuser. Salons. Heute: ein Raum, der Meta gehört.
-  Der Staat hat das nicht nur zugelassen. Er hat es nicht bemerkt.
+  Eine Bürgerinitiative. Öffentliches Hosting gewünscht.
+  In Schleswig-Holstein entwickelt.
 
-  Wir digitalisieren nicht das Amt. Wir schaffen den Raum davor.
-  Genau dort beginnt der Staat.
-
-  ——
-  JD Koehler · jdkoehler.com · Föhr, Nordfriesland
-
-  φ = (1+√5)/2 — appears after 89s. 89 is a Fibonacci number.
+  JD Köhler · Boldixumerstraße 30 · 25938 Wyk auf Föhr
 -->
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bürgerplatz Föhr — öffnet am 30. April 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Bürgerplatz</title>
+<meta name="description" content="Bürgerplatz. Eine Bürgerinitiative. Öffentliches Hosting gewünscht. In Schleswig-Holstein entwickelt.">
+<meta property="og:title" content="Bürgerplatz">
+<meta property="og:description" content="Bürgerplatz. Eine Bürgerinitiative. Öffentliches Hosting gewünscht. In Schleswig-Holstein entwickelt.">
+<meta property="og:locale" content="de_DE">
 
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --paper:      #ffffff;
+  --ink:        #0a0a0a;
+  --ink-soft:   #2a2a2a;
+  --ink-gold:   #d4a830;
+  --ink-blue:   #7aa5c3;
+  --ink-mute:   #8a9ba8;
+  --rule:       #e8e6e0;
+  --vh: 100vh;
+}
+
+@supports (height: 100dvh) {
+  :root { --vh: 100dvh; }
+}
 
 html, body {
-  width: 100%; height: 100%;
-  background: #ffffff;
-  -webkit-font-smoothing: antialiased;
-  font-family: -apple-system, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  background: var(--paper);
+  height: 100%;
 }
 
 body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   HERO — single word
+   ════════════════════════════════════════════════════════════════════ */
+
+.stage {
+  min-height: 100vh;
+  min-height: var(--vh);
   display: flex;
-  align-items: center;
-  padding-left: clamp(28px, 6vw, 80px);
+  flex-direction: column;
+  justify-content: center;
+  padding: max(env(safe-area-inset-top), 40px)
+           max(env(safe-area-inset-right), 24px)
+           max(env(safe-area-inset-bottom), 40px)
+           max(env(safe-area-inset-left), 24px);
+  position: relative;
   user-select: none;
   -webkit-user-select: none;
   cursor: default;
 }
 
-/* Shared type scale for all countdown lines */
-.type-line,
-.countdown-seconds > .seconds-value,
-.countdown-seconds > .seconds-label {
-  font-size: clamp(28px, 5.5vw, 72px);
-  font-weight: 700;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  white-space: nowrap;
+@media (min-width: 768px) {
+  .stage {
+    padding: max(env(safe-area-inset-top), 64px)
+             max(env(safe-area-inset-right), clamp(40px, 5vw, 72px))
+             max(env(safe-area-inset-bottom), 40px)
+             max(env(safe-area-inset-left),  clamp(40px, 5vw, 72px));
+  }
+}
+
+.hero-word {
   display: block;
-  /* Föhr, 53.7°N 8.5°E:
-     latitude  → cool desaturated blue (northern sky, low sun angle)
-     longitude → muted tones (continental edge, frequent overcast)
-     blue = North Sea / sky, grey-blue = horizon haze / tidal mist,
-     warm gold = Wattenmeer sand, amber = dry dune edge at low tide   */
-  background: linear-gradient(
-    135deg,
-    #1f5a9a  0%,   /* North Sea deep: cool cobalt, low saturation     */
-    #3d7cb5 14%,   /* sky mid: slightly lighter, still northern        */
-    #6496be 26%,   /* upper horizon: blue begins to grey               */
-    #8aaab8 38%,   /* horizon haze: grey-blue, sea mist transition     */
-    #a89e8a 50%,   /* tidal flat: warm neutral, sand meets water       */
-    #c4a252 64%,   /* wet Watt sand: muted gold, damp reflection       */
-    #d4a830 76%,   /* dry tidal sand: warmer, Wadden gold              */
-    #e0b83a 88%,   /* dune edge: deepening amber in afternoon light    */
-    #e8c040 100%   /* dry sand bottom: warm but not tropical           */
-  );
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  will-change: contents;
+  transform: translateZ(0);
+  opacity: 0;
+  transform: translateY(24px) translateZ(0);
+  transition: opacity 1.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 1.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  padding-top: 0.05em;
+  font-size: clamp(56px, 15vw, 72px);
+  color: var(--ink);
+}
+
+.hero-part-first {
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: transparent;
+  will-change: background-image;
 }
 
-.countdown-seconds > .seconds-label {
-  background: #d4a830;
+.hero-part-second {
+  color: var(--ink-gold);
+  -webkit-text-fill-color: var(--ink-gold);
+}
+
+.hero-break {
+  display: none;
+}
+
+@media (max-width: 479px) {
+  .hero-word {
+    line-height: 0.98;
+    font-size: clamp(72px, 22vw, 112px);
+  }
+  .hero-break {
+    display: block;
+  }
+}
+
+@media (min-width: 480px) {
+  .hero-word { font-size: clamp(80px, 14vw, 120px); }
+}
+
+@media (min-width: 768px) {
+  .hero-word { font-size: clamp(120px, 14vw, 184px); }
+}
+
+@media (min-width: 1200px) {
+  .hero-word { font-size: clamp(184px, 13vw, 256px); }
+}
+
+.hero-word.is-revealed {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   SCROLL INDICATOR
+   ════════════════════════════════════════════════════════════════════ */
+
+.scroll-indicator {
+  position: absolute;
+  bottom: max(env(safe-area-inset-bottom), 56px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1.6s ease 2.4s;
+  pointer-events: none;
+}
+
+.scroll-indicator.is-visible { opacity: 1; }
+
+.scroll-indicator-line {
+  display: block;
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(180deg, transparent, var(--ink-mute));
+  margin: 12px auto 0;
+  animation: drift 3s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+  50%      { opacity: 1;   transform: scaleY(1);   }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   MANIFESTO
+   ════════════════════════════════════════════════════════════════════ */
+
+.manifesto {
+  min-height: 100vh;
+  padding: max(env(safe-area-inset-top), 72px)
+           max(env(safe-area-inset-right), 24px)
+           max(env(safe-area-inset-bottom), 72px)
+           max(env(safe-area-inset-left), 24px);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (min-width: 768px) {
+  .manifesto {
+    padding: 120px max(env(safe-area-inset-right), clamp(40px, 5vw, 72px))
+             120px max(env(safe-area-inset-left),  clamp(40px, 5vw, 72px));
+  }
+}
+
+.manifesto-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.manifesto-kicker {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: clamp(32px, 5vh, 56px);
+  text-align: center;
+}
+
+/* ─── Two-column litany ─── */
+
+.litany {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(48px, 8vh, 80px);
+  margin-bottom: clamp(64px, 10vh, 96px);
+}
+
+@media (min-width: 768px) {
+  .litany {
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 5vw, 80px);
+  }
+}
+
+.litany-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.litany-head {
+  font-size: clamp(13px, 1.6vw, 15px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: clamp(24px, 4vh, 40px);
+  padding-bottom: clamp(14px, 2vh, 18px);
+}
+
+.litany-head.is-kein {
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  will-change: background-image;
 }
+.litany-head.is-ist { color: var(--ink-gold); }
 
-/* Region containers: simple flex column */
-.page-block {
+.litany-list {
+  list-style: none;
   display: flex;
   flex-direction: column;
 }
 
-.countdown-seconds {
+.litany-item {
+  font-size: clamp(26px, 4.5vw, 44px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.028em;
+  padding: clamp(10px, 1.6vh, 16px) 0;
+}
+
+.litany-item.is-kein {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  will-change: background-image;
+}
+
+.litany-item.is-kein strong {
+  font-weight: 800;
+  /* inherits the gradient via transparent fill from parent */
+}
+
+.litany-item.is-ist {
+  color: var(--ink-gold);
+}
+
+/* ─── Closing ─── */
+
+.manifesto-close {
+  text-align: center;
+  padding-top: clamp(48px, 8vh, 80px);
+}
+
+.manifesto-close-text {
+  font-size: clamp(22px, 3.6vw, 36px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  max-width: 30ch;
+  margin: 0 auto;
+}
+
+.manifesto-close-primary {
+  display: block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  will-change: background-image;
+  margin-bottom: 0.25em;
+}
+
+.manifesto-close-accent {
+  display: block;
+  color: var(--ink-gold);
+  font-weight: 800;
+}
+
+/* ─── Footer ─── */
+
+.manifesto-foot {
+  margin-top: clamp(56px, 10vh, 96px);
+  padding-top: clamp(32px, 5vh, 48px);
   display: flex;
-  align-items: baseline;
-  gap: 0.28em;
-}
-
-.countdown-seconds > .seconds-value,
-.countdown-seconds > .seconds-label {
-  display: inline-block;
-}
-
-/* Regions: only one visible at a time.
-   display:none when inactive; display:flex when .is-visible is set.
-   Layout reflows on show, which is acceptable -- regions do not
-   overlap and are never toggled rapidly.                         */
-#region-loading,
-#region-countdown,
-#region-fallback {
-  display: none;
   flex-direction: column;
+  gap: clamp(16px, 3vh, 20px);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: left;
 }
 
-#region-loading.is-visible,
-#region-countdown.is-visible,
-#region-fallback.is-visible {
+@media (min-width: 768px) {
+  .manifesto-foot {
+    gap: 14px;
+    font-size: 11px;
+  }
+}
+
+/* Primary: three statements, one per line on mobile, inline on desktop */
+.foot-primary {
   display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--ink-soft);
+  letter-spacing: 0.14em;
 }
 
-/* Hidden lines keep their space — no layout shift */
-.line-hidden {
-  /* Collapse entirely: no space, no content, nothing visible */
-  display: none;
+.foot-item {
+  display: block;
 }
 
-/* Visually hidden, available to screen readers */
+@media (min-width: 768px) {
+  .foot-primary {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75em;
+  }
+}
+
+/* Impressum: always single-line on mobile (with wrap if needed) */
+.foot-impressum {
+  color: var(--ink-mute);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .foot-impressum {
+    font-size: 10px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   SELECTION & MOTION
+   ════════════════════════════════════════════════════════════════════ */
+
+::selection {
+  background: var(--ink-gold);
+  color: var(--paper);
+}
+
 .sr-only {
   position: absolute;
   width: 1px; height: 1px;
   padding: 0; margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
 
-/* Animations */
-@keyframes beat {
-  0%, 100% { transform: scale(1);     }
-     18%   { transform: scale(1.04);  }
-     38%   { transform: scale(0.97);  }
-     58%   { transform: scale(1.015); }
-     78%   { transform: scale(0.998); }
-}
-@keyframes fade-out { to   { opacity: 0; } }
-@keyframes fade-in  { from { opacity: 0; } }
-
 @media (prefers-reduced-motion: reduce) {
-  @keyframes beat     { 0%, 100% { transform: scale(1); } }
-  @keyframes fade-out { to   { opacity: 1; } }
-  @keyframes fade-in  { from { opacity: 1; } }
-  .loading-dot        { animation: none; opacity: 0.6; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hero-word, .scroll-indicator {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .scroll-indicator { transform: translateX(-50%) !important; }
 }
-
-/* Loading dot */
-.loading-dot {
-  display: inline-block;
-  width: 0.55em; height: 0.55em;
-  border-radius: 50%;
-  background: #d4a830;
-  animation: breathe 1.6s ease-in-out infinite;
-  vertical-align: middle;
-  margin-left: 0.3em;
-  -webkit-text-fill-color: initial;
-}
-@keyframes breathe {
-  0%, 100% { opacity: 0.25; transform: scale(0.85); }
-  50%       { opacity: 1;    transform: scale(1);    }
-}
-
-/* Language indicator */
-#lang-indicator {
-  /* Reset browser button defaults */
-  appearance: none;
-  -webkit-appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  font: inherit;
-  position: fixed;
-  bottom: clamp(16px, 3vw, 28px);
-  left:   clamp(16px, 3vw, 28px);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #8ab4d0;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-#lang-indicator.is-visible { opacity: 1; }
-#lang-indicator:focus-visible {
-  outline: 2px solid #d4a830;
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-
-/* Author credit */
-.author-credit {
-  position: fixed;
-  bottom: clamp(16px, 3vw, 28px);
-  right:  clamp(16px, 3vw, 28px);
-  font-size: 11px;
-  color: #8ab4d0;
-  text-align: right;
-  line-height: 1.8;
-  opacity: 0;
-  transition: opacity 1.4s ease;
-  pointer-events: none;
-}
-.author-credit a {
-  color: #d4a830;
-  text-decoration: none;
-  pointer-events: all;
-  border-bottom: 1px solid rgba(212,168,48,0.3);
-}
-.author-credit a:focus-visible {
-  outline: 2px solid #d4a830;
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-.author-credit.is-visible { opacity: 1; }
-</style></head>
+</style>
+</head>
 
 <body>
-<main>
-  <h1 class="page-block"
-      aria-label="Bürgerplatz Föhr — öffnet am 30. April 2026">
 
-    <div id="region-loading" aria-hidden="true">
-      <span class="type-line" data-key="header1">Der Bürgerplatz</span>
-      <span class="type-line"><span data-key="header2">öffnet in</span> <span class="loading-dot" role="presentation"></span></span>
+<!-- ═══════════════════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════════════════ -->
+
+<section class="stage">
+  <h1 class="hero-word" id="hero"><span class="hero-part-first">Bürger</span><span class="hero-break" aria-hidden="true"></span><span class="hero-part-second">platz</span></h1>
+
+  <div class="scroll-indicator" id="scroll-indicator">
+    Das Manifest
+    <span class="scroll-indicator-line" aria-hidden="true"></span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     MANIFESTO — 7 + 7 litany
+     ═══════════════════════════════════════════════════════════════════ -->
+
+<section class="manifesto">
+  <div class="manifesto-inner">
+
+    <div class="manifesto-kicker">Das Manifest</div>
+
+    <div class="litany">
+
+      <div class="litany-col">
+        <div class="litany-head is-kein">Was es nicht ist</div>
+        <ul class="litany-list">
+          <li class="litany-item is-kein"><strong>Keine</strong> Überwachung.</li>
+          <li class="litany-item is-kein"><strong>Keine</strong> Empörung.</li>
+          <li class="litany-item is-kein"><strong>Kein</strong> Tracking.</li>
+          <li class="litany-item is-kein"><strong>Kein</strong> Profil.</li>
+          <li class="litany-item is-kein"><strong>Kein</strong> Algorithmus.</li>
+          <li class="litany-item is-kein"><strong>Keine</strong> Konkurrenz.</li>
+          <li class="litany-item is-kein"><strong>Keine</strong> Reichweite.</li>
+          <li class="litany-item is-kein"><strong>Keine</strong> Werbung.</li>
+          <li class="litany-item is-kein"><strong>Kein</strong> Geschäftsmodell.</li>
+          <li class="litany-item is-kein"><strong>Keine</strong> Abhängigkeit.</li>
+        </ul>
+      </div>
+
+      <div class="litany-col">
+        <div class="litany-head is-ist">Was es ist</div>
+        <ul class="litany-list">
+          <li class="litany-item is-ist">Vertrauen.</li>
+          <li class="litany-item is-ist">Freundlichkeit.</li>
+          <li class="litany-item is-ist">Menschlich.</li>
+          <li class="litany-item is-ist">Nachbarschaft.</li>
+          <li class="litany-item is-ist">Gleichberechtigt.</li>
+          <li class="litany-item is-ist">Kooperation.</li>
+          <li class="litany-item is-ist">Öffentlichkeit.</li>
+          <li class="litany-item is-ist">Gemeinwohl.</li>
+          <li class="litany-item is-ist">Souveränität.</li>
+          <li class="litany-item is-ist">Unabhängigkeit.</li>
+        </ul>
+      </div>
+
     </div>
 
-    <div id="region-countdown"
-         role="timer"
-         aria-label="Verbleibende Zeit bis zur Eröffnung">
-      <!-- Accessible summary: updated only when minutes change.
-           Screen readers announce this instead of per-second updates. -->
-      <span class="sr-only" id="countdown-summary" aria-live="polite" aria-atomic="true"></span>
-      <span class="type-line" id="header1-line" data-key="header1">Der Bürgerplatz</span>
-      <span class="type-line" id="header2-line" data-key="header2">öffnet in</span>
-      <span class="type-line line-hidden" id="days-line"></span>
-      <span class="type-line line-hidden" id="hours-line"></span>
-      <span class="type-line line-hidden" id="minutes-line"></span>
-      <span class="countdown-seconds line-hidden">
-        <span class="seconds-value" id="seconds-value"></span>
-        <span class="seconds-label" id="seconds-label">&nbsp;Sekunden</span>
-      </span>
+    <div class="manifesto-close">
+      <p class="manifesto-close-text">
+        <span class="manifesto-close-primary">Der Bürger ist nicht das Produkt.</span>
+        <span class="manifesto-close-accent">Der Platz gehört den Bürgern.</span>
+      </p>
     </div>
 
-    <div id="region-fallback" aria-label="Eröffnung am 30. April 2026">
-      <span class="type-line" data-key="header1">Der Bürgerplatz</span>
-      <span class="type-line" data-key="fallback2">öffnet am</span>
-      <span class="type-line" data-key="fallback3">30. April</span>
+    <div class="manifesto-foot">
+      <div class="foot-primary">
+        <span class="foot-item">Eine Bürgerinitiative.</span>
+        <span class="foot-item">Öffentliches Hosting gewünscht.</span>
+        <span class="foot-item">In Schleswig-Holstein entwickelt.</span>
+      </div>
+      <div class="foot-impressum">JD Köhler  ·  Boldixumerstraße 30  ·  25938 Wyk auf Föhr</div>
     </div>
 
-  </h1>
-</main>
-
-<button id="lang-indicator" type="button" aria-label="Sprache wechseln"></button>
-
-<aside class="author-credit" id="author-credit" aria-hidden="true">
-  JD Koehler<br>
-  <a href="https://jdkoehler.com" target="_blank" rel="noopener">jdkoehler.com</a>
-</aside>
+  </div>
+</section>
 
 <script>
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-
-// Target: April 30 2026, 12:00 noon Europe/Berlin (CEST = UTC+2).
-// Constructed in UTC to avoid browser timezone-parsing ambiguity.
-const TARGET_TIME_MS = Date.UTC(2026, 3, 30, 10, 0, 0);
-
-const BEAT_MS           = 440;
-const LOADING_DELAY_MS  = 800;
-const SYNC_TIMEOUT_MS   = 2000;
-
-// =============================================================================
-// LANGUAGE DEFINITIONS
-// =============================================================================
-// Each language object is self-contained. Adding a language = adding one object.
-//
-// Required per language:
-//   ones[], tens[]       : number word tables
-//   joiner               : word joining ones+tens in compound numbers
-//   composeNumber(n,o,t) : structural composition rule (varies by language)
-//   singularPrefix       : the "one" word per unit (gender/case-aware)
-//   units                : singular/plural noun pairs for each unit
-//   null                 : word for zero
-//   ui                   : all static UI strings
-
-const LANGUAGES = {
-
-  de: {
-    htmlLang: 'de',
-    code: 'DE',
-    ones: ['', 'Ein', 'Zwei', 'Drei', 'Vier', 'Fünf', 'Sechs', 'Sieben', 'Acht', 'Neun',
-           'Zehn', 'Elf', 'Zwölf', 'Dreizehn', 'Vierzehn', 'Fünfzehn', 'Sechzehn',
-           'Siebzehn', 'Achtzehn', 'Neunzehn'],
-    tens: ['', '', 'Zwanzig', 'Dreißig', 'Vierzig', 'Fünfzig',
-           'Sechzig', 'Siebzig', 'Achtzig', 'Neunzig'],
-    joiner: 'und',
-    // German compound: ones + joiner + tens (e.g. Einundzwanzig)
-    composeNumber(n, onesWord, tensWord) {
-      return onesWord + this.joiner + tensWord.toLowerCase();
-    },
-    // German uses dative case for "one": Einem (masc) or Einer (fem)
-    singularPrefix: { days: 'Einem', hours: 'Einer', minutes: 'Einer', seconds: 'Einer' },
-    units: {
-      days:    { singular: 'Tag',     plural: 'Tagen'   },
-      hours:   { singular: 'Stunde',  plural: 'Stunden' },
-      minutes: { singular: 'Minute',  plural: 'Minuten' },
-      seconds: { singular: 'Sekunde', plural: 'Sekunden'},
-    },
-    null: 'Null',
-    ui: {
-      header1:   'Der Bürgerplatz',
-      header2:   'öffnet in',
-      arrival1:  'Willkommen',
-      arrival2:  'auf dem',
-      arrival3:  'Bürgerplatz',
-      fallback2: 'öffnet am',
-      fallback3: '30. April',
-      switchLabel: 'Sprache wechseln',
-    },
-  },
-
-  fering: {
-    htmlLang: 'frr',
-    code: 'FÖR',
-    ones: ['', 'en', 'tu', 'trii', 'fjuar', 'fem', 'seks', 'soowen', 'acht', 'nügen',
-           'tian', 'alewen', 'twialwen', 'triatian', 'fjuartian', 'femtian', 'sekstian',
-           'soowentian', 'achttian', 'nügentian'],
-    tens: ['', '', 'tweentig', 'triitig', 'fjuartig', 'femtig',
-           'sekstig', 'soowentig', 'achttig', 'nügentig'],
-    joiner: 'an',
-    // Fering compound: ones + " an " + tens (e.g. en an tweentig)
-    composeNumber(n, onesWord, tensWord) {
-      return onesWord + ' ' + this.joiner + ' ' + tensWord;
-    },
-    // Fering: no grammatical case, invariant "en" for all units
-    singularPrefix: { days: 'en', hours: 'en', minutes: 'en', seconds: 'en' },
-    units: {
-      days:    { singular: 'dai',    plural: 'dai'     },
-      hours:   { singular: 'stünj',  plural: 'stünjen' },
-      minutes: { singular: 'minüt',  plural: 'minüten' },
-      seconds: { singular: 'sekund', plural: 'sekunden'},
-    },
-    null: 'nul',
-    ui: {
-      header1:   'Büarplaats',
-      header2:   'gaat apen in',
-      arrival1:  'Welkamen',
-      arrival2:  'oon a',
-      arrival3:  'Büarplaats',
-      fallback2: 'gaat apen a',
-      fallback3: '30. April',
-      switchLabel: 'Spriik wessel',
-    },
-  },
-
-
-};
-
-const LANGUAGE_ORDER = ['de', 'fering'];
-
-// =============================================================================
-// ACTIVE LANGUAGE STATE
-// =============================================================================
-// Always starts in German (no persistence by design).
-
-let activeLangKey = 'de';
-function lang() { return LANGUAGES[activeLangKey]; }
-
-// =============================================================================
-// STATE MACHINE
-// =============================================================================
-/*
-  Reachable states and transitions:
-
-  SYNCING    initial state; page is white or shows loading dot after 800ms
-    --> RUNNING    sync succeeded or offline fallback; live countdown shown
-
-  RUNNING    countdown is live
-    --> SLEEPING   tab becomes hidden
-    --> COMPLETE   TARGET_TIME reached
-
-  SLEEPING   tab hidden; timer paused; countdown hidden
-    --> RUNNING    tab visible again
-
-  COMPLETE   target time reached; timer stopped; arrival message shown
-    (terminal state, no further transitions)
-*/
-
-const State = Object.freeze({
-  SYNCING:   'SYNCING',
-  RUNNING:   'RUNNING',
-  SLEEPING:  'SLEEPING',
-  COMPLETE:  'COMPLETE',
-});
-
-let currentState = State.SYNCING;
-
-function goToState(newState) {
-  if (currentState === newState) return;
-  currentState = newState;
-
-  switch (newState) {
-    case State.RUNNING:
-      showRegion('countdown');
-      startTimer();
-      break;
-    case State.SLEEPING:
-      showRegion(null);
-      stopTimer();
-      break;
-    case State.COMPLETE:
-      renderComplete();
-      stopTimer();
-      break;
-  }
-}
-
-// =============================================================================
-// DOM REFERENCES
-// =============================================================================
-
-const regionLoading   = document.getElementById('region-loading');
-const regionCountdown = document.getElementById('region-countdown');
-const regionFallback  = document.getElementById('region-fallback');
-const header1LineEl   = document.getElementById('header1-line');
-const header2LineEl   = document.getElementById('header2-line');
-const daysLineEl      = document.getElementById('days-line');
-const hoursLineEl     = document.getElementById('hours-line');
-const minutesLineEl   = document.getElementById('minutes-line');
-const secondsValueEl  = document.getElementById('seconds-value');
-const secondsLabelEl  = document.getElementById('seconds-label');
-const secondsLineEl   = secondsValueEl.closest('.countdown-seconds');
-const countdownSummaryEl = document.getElementById('countdown-summary');
-const authorCreditEl     = document.getElementById('author-credit');
-const langIndicatorEl    = document.getElementById('lang-indicator');
-
-// =============================================================================
-// REGION CONTROL
-// =============================================================================
-
-function showRegion(name) {
-  [regionLoading, regionCountdown, regionFallback].forEach(el => {
-    el.classList.remove('is-visible');
-  });
-  if (name === 'loading')   regionLoading.classList.add('is-visible');
-  if (name === 'countdown') regionCountdown.classList.add('is-visible');
-  if (name === 'fallback')  regionFallback.classList.add('is-visible');
-}
-
-let _loadingTimer = null;
-
-function scheduleLoadingIndicator() {
-  _loadingTimer = setTimeout(() => {
-    if (currentState === State.SYNCING) showRegion('loading');
-  }, LOADING_DELAY_MS);
-}
-
-function cancelLoadingIndicator() {
-  clearTimeout(_loadingTimer);
-  _loadingTimer = null;
-}
-
-// =============================================================================
-// FORMATTING: pure functions, operate on a language object
-// =============================================================================
-
-// Converts a non-negative integer to a number word in the given language.
-function toNumberWord(n, language) {
-  const value = Math.max(0, Math.floor(n));
-  if (value === 0)  return language.null;
-  if (value < 20)   return language.ones[value];
-  const t = Math.floor(value / 10);
-  const o = value % 10;
-  if (o === 0) return language.tens[t];
-  return language.composeNumber(value, language.ones[o], language.tens[t]);
-}
-
-// Returns "prefix + singular/plural noun" or null if n is zero.
-// Null signals the render layer to hide the line.
-function formatUnit(n, unitKey, language) {
-  if (n === 0) return null;
-  const unit   = language.units[unitKey];
-  const prefix = n === 1 ? language.singularPrefix[unitKey] : toNumberWord(n, language);
-  const noun   = n === 1 ? unit.singular : unit.plural;
-  return prefix + ' ' + noun;
-}
-
-// Returns all display strings for the current tick.
-function renderBits({ days, hours, minutes, seconds }, language) {
-  return {
-    daysLine:     formatUnit(days,    'days',    language),
-    hoursLine:    formatUnit(hours,   'hours',   language),
-    minutesLine:  formatUnit(minutes, 'minutes', language),
-    secondsWord:  seconds === 0 ? null : (
-                    seconds === 1
-                      ? language.singularPrefix.seconds
-                      : toNumberWord(seconds, language)
-                  ),
-    secondsLabel: seconds === 0 ? null : (
-                    '\u00a0' + (seconds === 1
-                      ? language.units.seconds.singular
-                      : language.units.seconds.plural)
-                  ),
-  };
-}
-
-// Figure out what's left (or null if we're already past the target).
-function calcLeft(nowMs) {
-  const remaining = TARGET_TIME_MS - nowMs;
-  if (remaining <= 0) return null;
-  return {
-    days:    Math.floor(remaining / 864e5),
-    hours:   Math.floor(remaining % 864e5 / 36e5),
-    minutes: Math.floor(remaining % 36e5  / 6e4),
-    seconds: Math.floor(remaining % 6e4   / 1e3),
-  };
-}
-
-// =============================================================================
-// LANGUAGE SWITCHING
-// =============================================================================
-// Cycles through LANGUAGE_ORDER on click/tap anywhere on screen.
-// Static text nodes are updated via data-key attributes.
-// The countdown re-renders immediately with the new language.
-
-function applyLanguage(language) {
-  // Update <html lang> for screen readers
-  document.documentElement.lang = language.htmlLang;
-
-  // Update all static text nodes tagged with data-key
-  document.querySelectorAll('[data-key]').forEach(el => {
-    const key = el.dataset.key;
-    if (language.ui[key] !== undefined) el.textContent = language.ui[key];
-  });
-
-  // Update lang button: visible code + accessible label in the active language
-  langIndicatorEl.textContent = language.code;
-  langIndicatorEl.setAttribute('aria-label', language.ui.switchLabel);
-  langIndicatorEl.classList.add('is-visible');
-
-  // Force a fresh render of the countdown with the new language
-  // Reset previous values so all lines re-render
-  Object.keys(previousRenderedValues).forEach(k => {
-    previousRenderedValues[k] = null;
-  });
-
-  if (currentState === State.RUNNING) render();
-  if (currentState === State.COMPLETE) renderComplete();
-}
-
-function cycleLanguage() {
-  const currentIndex = LANGUAGE_ORDER.indexOf(activeLangKey);
-  activeLangKey = LANGUAGE_ORDER[(currentIndex + 1) % LANGUAGE_ORDER.length];
-  applyLanguage(lang());
-}
-
-// Language cycles on click anywhere on the page.
-// The button also handles keyboard (Enter + Space) for accessibility.
-document.addEventListener('click', e => {
-  // Prevent double-firing when the click lands on the button itself
-  if (!e.target.closest('#author-credit')) cycleLanguage();
-});
-langIndicatorEl.addEventListener('keydown', e => {
-  if (e.key === ' ') { e.preventDefault(); cycleLanguage(); }
-});
-
-// =============================================================================
-// ANIMATION HELPERS
-// =============================================================================
-
-function triggerBeat(element) {
-  element.style.animation = 'none';
-  void element.offsetWidth; // required to restart a CSS animation mid-play
-  element.style.animation = `beat ${BEAT_MS}ms cubic-bezier(.36,.07,.19,.97) forwards`;
-  setTimeout(() => { element.style.animation = 'none'; }, BEAT_MS + 20);
-}
-
-function swapText(element, newText) {
-  element.style.animation = `fade-out ${BEAT_MS * 0.35}ms ease forwards`;
-  setTimeout(() => {
-    element.textContent = newText;
-    element.style.animation = `fade-in ${BEAT_MS * 0.45}ms ease forwards`;
-    setTimeout(() => { element.style.animation = 'none'; }, BEAT_MS * 0.45 + 20);
-  }, BEAT_MS * 0.35);
-}
-
-// =============================================================================
-// RENDER
-// =============================================================================
-
-const previousRenderedValues = {
-  daysLine:    null,
-  hoursLine:   null,
-  minutesLine: null,
-  secondsKey:  null,
-};
-
-function renderLine(element, formattedText, previousKey) {
-  if (formattedText === previousKey) return previousKey;
-
-  if (formattedText === null) {
-    // Collapse immediately -- no fade needed when hiding
-    element.textContent = '';
-    element.classList.add('line-hidden');
-  } else {
-    element.classList.remove('line-hidden');
-    triggerBeat(element);
-    swapText(element, formattedText);
-  }
-
-  return formattedText;
-}
-
-function render() {
-  const parts = calcLeft(syncedNow());
-
-  if (!parts) {
-    goToState(State.COMPLETE);
-    return;
-  }
-
-  const formatted  = renderBits(parts, lang());
-  const secondsKey = formatted.secondsWord + '|' + formatted.secondsLabel;
-
-  previousRenderedValues.daysLine = renderLine(daysLineEl, formatted.daysLine, previousRenderedValues.daysLine);
-  previousRenderedValues.hoursLine = renderLine(hoursLineEl, formatted.hoursLine, previousRenderedValues.hoursLine);
-
-  // Capture change status before overwriting the previous value.
-  const minutesChanged = formatted.minutesLine !== previousRenderedValues.minutesLine;
-  previousRenderedValues.minutesLine = renderLine(minutesLineEl, formatted.minutesLine, previousRenderedValues.minutesLine);
-
-  // Update accessible summary only when minutes change -- not every second.
-  if (minutesChanged) {
-    countdownSummaryEl.textContent = [formatted.daysLine, formatted.hoursLine, formatted.minutesLine]
-      .filter(Boolean).join(', ');
-  }
-
-  if (secondsKey !== previousRenderedValues.secondsKey) {
-    if (formatted.secondsWord === null) {
-      secondsValueEl.textContent = '';
-      secondsLabelEl.textContent = '';
-      secondsLineEl.classList.add('line-hidden');
-    } else {
-      secondsLineEl.classList.remove('line-hidden');
-      triggerBeat(secondsLineEl);
-      swapText(secondsValueEl, formatted.secondsWord);
-      secondsLabelEl.textContent = formatted.secondsLabel;
-    }
-    previousRenderedValues.secondsKey = secondsKey;
-  }
-}
-
-function renderComplete() {
-  showRegion('countdown');
-  // Replace header lines with arrival message
-  header1LineEl.classList.add('line-hidden');
-  header2LineEl.classList.add('line-hidden');
-  daysLineEl.classList.remove('line-hidden');
-  hoursLineEl.classList.remove('line-hidden');
-  minutesLineEl.classList.remove('line-hidden');
-  secondsLineEl.classList.add('line-hidden');
-  daysLineEl.textContent    = lang().ui.arrival1;
-  hoursLineEl.textContent   = lang().ui.arrival2;
-  minutesLineEl.textContent = lang().ui.arrival3;
-}
-
-// =============================================================================
-// TIMER
-// =============================================================================
-
-let _intervalHandle = null;
-
-function startTimer() {
-  if (_intervalHandle !== null) clearInterval(_intervalHandle);
-  render();
-  _intervalHandle = setInterval(render, 1000);
-}
-
-function stopTimer() {
-  if (_intervalHandle !== null) {
-    clearInterval(_intervalHandle);
-    _intervalHandle = null;
-  }
-}
-
-// =============================================================================
-// CLOCK SYNC
-// =============================================================================
-// Try a few time APIs simultaneously, first one wins via Promise.any.
-// Correction uses NTP half-RTT: offset = server_ms - (local_at_send + rtt/2).
-//
-// If all sources fail within 2s AND the browser is offline: fall back to local
-// clock (offset = 0). A potentially drifted countdown is better than nothing
-// when there's no network at all. If online but all sources fail: also fall
-// back to local clock — we tried, network is unreliable, move on.
-
-let clockOffset = 0;
-
-function syncedNow() {
-  return Date.now() + clockOffset;
-}
-
-function makeTimeoutSignal(ms) {
-  if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) {
-    return AbortSignal.timeout(ms);
-  }
-  const controller = new AbortController();
-  setTimeout(() => controller.abort(), ms);
-  return controller.signal;
-}
-
-const TIME_SOURCES = [
-  async () => {
-    const wallAtSend = Date.now(), t0 = performance.now();
-    const r    = await fetch('https://worldtimeapi.org/api/timezone/Europe/Berlin',
-                             { cache: 'no-store', signal: makeTimeoutSignal(SYNC_TIMEOUT_MS) });
-    const rtt  = performance.now() - t0;
-    const data = await r.json();
-    if (!data.unixtime) throw new Error('worldtimeapi: missing unixtime');
-    return data.unixtime * 1000 - (wallAtSend + rtt / 2);
-  },
-  async () => {
-    const wallAtSend = Date.now(), t0 = performance.now();
-    const r    = await fetch('https://timeapi.io/api/time/current/zone?timeZone=Europe/Berlin',
-                             { cache: 'no-store', signal: makeTimeoutSignal(SYNC_TIMEOUT_MS) });
-    const rtt  = performance.now() - t0;
-    const data = await r.json();
-    const serverMs = new Date(data.dateTime).getTime();
-    if (isNaN(serverMs)) throw new Error('timeapi.io: invalid dateTime');
-    return serverMs - (wallAtSend + rtt / 2);
-  },
-  async () => {
-    const wallAtSend = Date.now(), t0 = performance.now();
-    const r    = await fetch('https://www.cloudflare.com/cdn-cgi/trace',
-                             { cache: 'no-store', signal: makeTimeoutSignal(SYNC_TIMEOUT_MS) });
-    const rtt  = performance.now() - t0;
-    const text = await r.text();
-    const match = text.match(/ts=(\d+(?:\.\d+)?)/);
-    if (!match) throw new Error('cloudflare: ts field missing');
-    return parseFloat(match[1]) * 1000 - (wallAtSend + rtt / 2);
-  },
+(function() {
+'use strict';
+
+/* ════════════════════════════════════════════════════════════════════
+   GRADIENT — Nordsee → Watt → Dünenrand
+   ════════════════════════════════════════════════════════════════════ */
+
+const STOPS = [
+  '#1a4e8c 0%',
+  '#2f6fa8 13%',
+  '#5588b5 26%',
+  '#7fa5b8 40%',
+  '#a89e8a 52%',
+  '#c4a252 66%',
+  '#d4a830 78%',
+  '#e0b83a 90%',
+  '#e8c040 100%'
+].join(', ');
+
+const hero = document.getElementById('hero');
+const heroFirst = hero.querySelector('.hero-part-first');
+const gradientElements = [
+  heroFirst,
+  ...document.querySelectorAll('.litany-head.is-kein'),
+  ...document.querySelectorAll('.litany-item.is-kein'),
+  ...document.querySelectorAll('.manifesto-close-primary')
 ];
 
-async function trySync() {
-  try {
-    clockOffset = await Promise.any(TIME_SOURCES.map(fn => fn()));
-    return true;
-  } catch (_) {
-    // All sources failed. Fall back to local clock.
-    clockOffset = 0;
-    return false;
+function paintGradient(angleDeg) {
+  const image = 'linear-gradient(' + angleDeg.toFixed(1) + 'deg, ' + STOPS + ')';
+  for (let i = 0; i < gradientElements.length; i++) {
+    gradientElements[i].style.backgroundImage = image;
   }
 }
 
-// =============================================================================
-// BOOT SEQUENCE
-// =============================================================================
-/*
-  1. Schedule loading dot (shown only if sync takes > 800ms).
-  2. Race all 3 time sources simultaneously with 2s timeout each.
-  3a. Sync succeeds -> RUNNING with corrected offset.
-  3b. Sync fails    -> RUNNING with local clock (offset = 0).
-      A potentially drifted countdown is better than no countdown.
-*/
-async function boot() {
-  scheduleLoadingIndicator();
-  await trySync();
-  cancelLoadingIndicator();
-  goToState(State.RUNNING);
-}
+paintGradient(135);
 
-// =============================================================================
-// LIFECYCLE EVENTS
-// =============================================================================
+const canHover    = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Tab hidden: pause countdown.
-// Tab visible again: re-sync (best-effort) and resume.
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    if (currentState === State.RUNNING) goToState(State.SLEEPING);
-  } else {
-    if (currentState === State.SLEEPING) {
-      trySync().then(() => goToState(State.RUNNING));
+if (canHover && !reduceMotion) {
+  let target = 135, current = 135, raf = null, lastPainted = 135;
+
+  function onMove(e) {
+    const w = window.innerWidth  || document.documentElement.clientWidth;
+    const h = window.innerHeight || document.documentElement.clientHeight;
+    const x = e.clientX / w;
+    const y = e.clientY / h;
+    target = 45 + (x * 0.6 + y * 0.4) * 180;
+    if (raf === null) raf = requestAnimationFrame(tick);
+  }
+
+  function tick() {
+    const diff = target - current;
+    current += diff * 0.09;
+    if (Math.abs(current - lastPainted) > 0.3) {
+      paintGradient(current);
+      lastPainted = current;
     }
-  }
-});
-
-// Network restored: silently refresh offset.
-window.addEventListener('online', () => {
-  if (currentState === State.RUNNING || currentState === State.SLEEPING) {
-    trySync();
-  }
-});
-
-// =============================================================================
-// SELF-VERIFICATION TESTS
-// =============================================================================
-
-(function runTests() {
-  const L = LANGUAGES;
-  const results = [];
-  function expect(label, actual, expected) {
-    results.push({ pass: actual === expected, label, actual, expected });
+    if (Math.abs(diff) > 0.1) raf = requestAnimationFrame(tick);
+    else raf = null;
   }
 
-  // German number words
-  expect('de word(0)',  toNumberWord(0, L.de),  'Null');
-  expect('de word(1)',  toNumberWord(1, L.de),  'Ein');
-  expect('de word(21)', toNumberWord(21, L.de), 'Einundzwanzig');
-  expect('de word(34)', toNumberWord(34, L.de), 'Vierunddreißig');
-  expect('de word(59)', toNumberWord(59, L.de), 'Neunundfünfzig');
+  window.addEventListener('pointermove', onMove, { passive: true });
+}
 
-  // Fering number words
-  expect('fer word(0)',  toNumberWord(0, L.fering),  'nul');
-  expect('fer word(1)',  toNumberWord(1, L.fering),  'en');
-  expect('fer word(21)', toNumberWord(21, L.fering), 'en an tweentig');
-  expect('fer word(34)', toNumberWord(34, L.fering), 'fjuar an triitig');
-  expect('fer word(59)', toNumberWord(59, L.fering), 'nügen an femtig');
+if (!canHover && !reduceMotion) {
+  let t = 0;
+  (function drift() {
+    t += 0.0015;
+    paintGradient(135 + Math.sin(t) * 55);
+    requestAnimationFrame(drift);
+  })();
+}
 
-  // German unit formatting with dative case
-  expect('de 1 Tag',    formatUnit(1, 'days',    L.de), 'Einem Tag');
-  expect('de 2 Tagen',  formatUnit(2, 'days',    L.de), 'Zwei Tagen');
-  expect('de 0 days',   formatUnit(0, 'days',    L.de), null);
-  expect('de 1 Stunde', formatUnit(1, 'hours',   L.de), 'Einer Stunde');
-  expect('de 1 Sekunde',formatUnit(1, 'seconds', L.de), 'Einer Sekunde');
-  expect('de 59 Sek',   formatUnit(59,'seconds', L.de), 'Neunundfünfzig Sekunden');
+/* ════════════════════════════════════════════════════════════════════
+   REVEAL + SCROLL INDICATOR
+   ════════════════════════════════════════════════════════════════════ */
 
-  // Fering unit formatting (no gender, plural = base form for dai)
-  expect('fer 1 dai',   formatUnit(1, 'days',    L.fering), 'en dai');
-  expect('fer 2 dai',   formatUnit(2, 'days',    L.fering), 'tu dai');
-  expect('fer 1 stünj', formatUnit(1, 'hours',   L.fering), 'en stünj');
-  expect('fer 3 stünjen',formatUnit(3,'hours',   L.fering), 'trii stünjen');
-  expect('fer 0 days',  formatUnit(0, 'days',    L.fering), null);
+setTimeout(function() { hero.classList.add('is-revealed'); }, 300);
 
-  // calcLeft boundary
-  const r = calcLeft(TARGET_TIME_MS - 1000);
-  expect('1s before: non-null',  r !== null,     true);
-  expect('1s before: seconds=1',  r && r.seconds, 1);
-  expect('1s before: minutes=0',  r && r.minutes, 0);
-  expect('at target: null',      calcLeft(TARGET_TIME_MS),     null);
-  expect('after target: null',   calcLeft(TARGET_TIME_MS + 1), null);
+const scrollIndicator = document.getElementById('scroll-indicator');
+setTimeout(function() { scrollIndicator.classList.add('is-visible'); }, 100);
 
-  const failures = results.filter(r => !r.pass);
-  console.log(
-    '%cTests: ' + (failures.length === 0 ? 'all ' + results.length + ' passed' : failures.length + ' failed'),
-    'color:' + (failures.length === 0 ? '#4a90cc' : '#c0392b') + ';font-family:monospace;font-size:12px'
-  );
-  failures.forEach(f => console.log(
-    '%c  FAIL ' + f.label + ': expected ' + JSON.stringify(f.expected) + ', got ' + JSON.stringify(f.actual),
-    'color:#c0392b;font-family:monospace;font-size:11px'
-  ));
+window.addEventListener('scroll', function() {
+  if (window.scrollY > 40) {
+    scrollIndicator.style.opacity = Math.max(0, 1 - window.scrollY / 200);
+  } else {
+    scrollIndicator.style.opacity = '';
+  }
+}, { passive: true });
+
+/* ════════════════════════════════════════════════════════════════════
+   iOS viewport fallback
+   ════════════════════════════════════════════════════════════════════ */
+
+if (!CSS.supports('height', '100dvh')) {
+  function setVh() {
+    document.documentElement.style.setProperty('--vh', window.innerHeight + 'px');
+  }
+  setVh();
+  window.addEventListener('resize', setVh, { passive: true });
+  window.addEventListener('orientationchange', setVh, { passive: true });
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   Console
+   ════════════════════════════════════════════════════════════════════ */
+
+console.log('%cBürgerplatz.',
+  'color:#d4a830;font-family:-apple-system,sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.04em;');
+
 })();
-
-// =============================================================================
-// EASTER EGG: φ
-// =============================================================================
-
-const PHI = (1 + Math.sqrt(5)) / 2;
-
-// Surfaces after 89 seconds. 89 is the 11th Fibonacci number.
-// PHI is the limit of consecutive Fibonacci ratios. Not accidental.
-setTimeout(() => authorCreditEl.classList.add('is-visible'), 89 * 1000);
-
-console.log('%cφ = ' + PHI, 'color:#8ab4d0;font-family:monospace;font-size:13px');
-console.log('%c  jdkoehler.com', 'color:#d4a830;font-family:monospace;font-size:11px');
-
-// =============================================================================
-// START
-// =============================================================================
-
-applyLanguage(lang()); // initialize lang button and aria-label on load
-boot();
 </script>
-
 </body>
 </html>
