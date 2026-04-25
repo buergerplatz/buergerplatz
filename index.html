@@ -1,629 +1,1540 @@
-<!DOCTYPE html>
-<!--
-  Bürgerplatz
-
-  Im Corporate Design des Landes Schleswig-Holstein:
-    SH Blau   #003064
-    SH Rot    #d4004b
-    SH Türkis #006173
-    SH Grau   #eaeeed
-
-  Schrift: Inter (als lizenzfreier Ersatz für Museo Sans,
-  der offiziellen SH-Schrift).
-
-  Eine Bürgerinitiative. Öffentliches Hosting gewünscht.
-  In Schleswig-Holstein entwickelt.
-
-  JD Köhler · Boldixumerstraße 30 · 25938 Wyk auf Föhr
--->
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#003064">
-<title>Bürgerplatz</title>
-<meta name="description" content="Bürgerplatz. Eine Bürgerinitiative. Öffentliches Hosting gewünscht. In Schleswig-Holstein entwickelt.">
-<meta property="og:title" content="Bürgerplatz">
-<meta property="og:description" content="Bürgerplatz. Eine Bürgerinitiative. Öffentliches Hosting gewünscht. In Schleswig-Holstein entwickelt.">
-<meta property="og:locale" content="de_DE">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bürgerplatz · Human Interface Guidelines</title>
+<meta name="description" content="Die Bürgerplatz Human Interface Guidelines. Eine demokratische User-Interface-Grammatik in sechs Schichten: Foundations, Patterns, Components, Content, Accessibility, Anti-Patterns.">
 <style>
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  /* Schleswig-Holstein Corporate Design */
-  --sh-blau:     #003064;
-  --sh-blau-alt: #006173;  /* Zusatzfarbe 2 — türkis */
-  --sh-rot:      #d4004b;
-  --sh-grau:     #eaeeed;  /* Zusatzfarbe 1 */
-  --sh-schwarz:  #000000;
-  --sh-weiss:    #ffffff;
-
-  /* Semantic */
-  --paper:       var(--sh-weiss);
-  --ink:         var(--sh-schwarz);
-  --ink-primary: var(--sh-blau);
-  --ink-accent:  var(--sh-rot);
-  --ink-soft:    #4a5668;
-  --ink-mute:    #7a8798;
-
-  --vh: 100vh;
-}
-
-@supports (height: 100dvh) {
-  :root { --vh: 100dvh; }
-}
-
-html, body {
-  background: var(--paper);
-  height: 100%;
-}
-
-body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: geometricPrecision;
-  -webkit-tap-highlight-color: transparent;
-  color: var(--ink);
-  overflow-x: hidden;
-}
-
-/* ════════════════════════════════════════════════════════════════════
-   HERO — single word
-   ════════════════════════════════════════════════════════════════════ */
-
-.stage {
-  min-height: 100vh;
-  min-height: var(--vh);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: max(env(safe-area-inset-top), 40px)
-           max(env(safe-area-inset-right), 24px)
-           max(env(safe-area-inset-bottom), 40px)
-           max(env(safe-area-inset-left), 24px);
-  position: relative;
-  user-select: none;
-  -webkit-user-select: none;
-  cursor: default;
-}
-
-@media (min-width: 768px) {
-  .stage {
-    padding: max(env(safe-area-inset-top), 64px)
-             max(env(safe-area-inset-right), clamp(40px, 5vw, 72px))
-             max(env(safe-area-inset-bottom), 40px)
-             max(env(safe-area-inset-left),  clamp(40px, 5vw, 72px));
+  :root {
+    color-scheme: light;
+    --bg: #f5f5f7;
+    --bg-2: #fbfbfd;
+    --surface: rgba(255,255,255,.86);
+    --surface-solid: #ffffff;
+    --text: #1d1d1f;
+    --muted: #6e6e73;
+    --soft: #86868b;
+    --line: rgba(0,0,0,.10);
+    --line-strong: rgba(0,0,0,.18);
+    --blue: #0071e3;
+    --blue-2: #2997ff;
+    --blue-soft: #eaf4ff;
+    --cyan-soft: #e8f8ff;
+    --purple-soft: #f5efff;
+    --green: #248a3d;
+    --green-soft: #ecf8f0;
+    --orange: #bf5b00;
+    --orange-soft: #fff4e5;
+    --red: #c9342f;
+    --red-soft: #fff0ef;
+    --gold: #b08818;
+    --gold-soft: #fbf3df;
+    --shadow: 0 18px 50px rgba(0,0,0,.075);
+    --shadow-soft: 0 8px 24px rgba(0,0,0,.05);
+    --radius-xl: 34px;
+    --radius-lg: 24px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+    --max: 1120px;
+    --max-narrow: 820px;
   }
-}
 
-.hero-word {
-  display: block;
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  will-change: contents;
-  transform: translateZ(0);
-  opacity: 0;
-  transform: translateY(24px) translateZ(0);
-  transition: opacity 1.6s cubic-bezier(0.2, 0.8, 0.2, 1),
-              transform 1.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-  padding-top: 0.05em;
-  font-size: clamp(56px, 15vw, 72px);
-  color: var(--ink);
-}
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
-.hero-part-first {
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  will-change: background-image;
-}
-
-.hero-part-second {
-  color: var(--ink-accent);
-  -webkit-text-fill-color: var(--ink-accent);
-}
-
-.hero-break {
-  display: none;
-}
-
-@media (max-width: 479px) {
-  .hero-word {
-    line-height: 0.98;
-    font-size: clamp(72px, 22vw, 112px);
+  body {
+    margin: 0;
+    background: linear-gradient(180deg, #ffffff 0, var(--bg) 38%, #f1f1f4 100%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-  .hero-break {
-    display: block;
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ─── Header ─── */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    background: rgba(251,251,253,.82);
+    backdrop-filter: blur(24px) saturate(180%);
   }
-}
 
-@media (min-width: 480px) {
-  .hero-word { font-size: clamp(80px, 14vw, 120px); }
-}
-
-@media (min-width: 768px) {
-  .hero-word { font-size: clamp(120px, 14vw, 184px); }
-}
-
-@media (min-width: 1200px) {
-  .hero-word { font-size: clamp(184px, 13vw, 256px); }
-}
-
-.hero-word.is-revealed {
-  opacity: 1;
-  transform: translateY(0) translateZ(0);
-}
-
-/* ════════════════════════════════════════════════════════════════════
-   SCROLL INDICATOR
-   ════════════════════════════════════════════════════════════════════ */
-
-.scroll-indicator {
-  position: absolute;
-  bottom: max(env(safe-area-inset-bottom), 56px);
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  text-align: center;
-  opacity: 0;
-  transition: opacity 1.6s ease 2.4s;
-  pointer-events: none;
-}
-
-.scroll-indicator.is-visible { opacity: 1; }
-
-.scroll-indicator-line {
-  display: block;
-  width: 1px;
-  height: 36px;
-  background: linear-gradient(180deg, transparent, var(--ink-mute));
-  margin: 12px auto 0;
-  animation: drift 3s ease-in-out infinite;
-}
-
-@keyframes drift {
-  0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
-  50%      { opacity: 1;   transform: scaleY(1);   }
-}
-
-/* ════════════════════════════════════════════════════════════════════
-   MANIFESTO
-   ════════════════════════════════════════════════════════════════════ */
-
-.manifesto {
-  min-height: 100vh;
-  padding: max(env(safe-area-inset-top), 72px)
-           max(env(safe-area-inset-right), 24px)
-           max(env(safe-area-inset-bottom), 72px)
-           max(env(safe-area-inset-left), 24px);
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-@media (min-width: 768px) {
-  .manifesto {
-    padding: 120px max(env(safe-area-inset-right), clamp(40px, 5vw, 72px))
-             120px max(env(safe-area-inset-left),  clamp(40px, 5vw, 72px));
+  .nav {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 22px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
   }
-}
 
-.manifesto-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.manifesto-kicker {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-bottom: clamp(32px, 5vh, 56px);
-  text-align: center;
-}
-
-/* ─── Two-column litany ─── */
-
-.litany {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(48px, 8vh, 80px);
-  margin-bottom: clamp(64px, 10vh, 96px);
-}
-
-@media (min-width: 768px) {
-  .litany {
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(40px, 5vw, 80px);
+  .brand {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -.005em;
+    white-space: nowrap;
   }
-}
+  .brand-sub { color: var(--muted); font-weight: 500; margin-left: 8px; }
 
-.litany-col {
-  display: flex;
-  flex-direction: column;
-}
+  .nav-links {
+    display: none;
+    gap: 22px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .nav-links a:hover { color: var(--text); }
 
-.litany-head {
-  font-size: clamp(13px, 1.6vw, 15px);
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin-bottom: clamp(24px, 4vh, 40px);
-  padding-bottom: clamp(14px, 2vh, 18px);
-}
+  .container {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 22px;
+  }
+  .container-narrow {
+    max-width: var(--max-narrow);
+    margin: 0 auto;
+    padding: 0 22px;
+  }
 
-.litany-head.is-kein {
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  will-change: background-image;
-}
-.litany-head.is-ist { color: var(--ink-accent); }
+  /* ─── Hero ─── */
+  .hero {
+    padding: 72px 0 48px;
+    text-align: center;
+  }
 
-.litany-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-}
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 18px;
+  }
 
-.litany-item {
-  font-size: clamp(26px, 4.5vw, 44px);
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.028em;
-  padding: clamp(10px, 1.6vh, 16px) 0;
-}
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 80px);
+    line-height: 1.04;
+    letter-spacing: -.04em;
+    margin: 0 auto;
+    max-width: 14ch;
+    font-weight: 760;
+  }
 
-.litany-item.is-kein {
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  will-change: background-image;
-}
+  .hero .lead {
+    margin: 24px auto 0;
+    max-width: 640px;
+    color: var(--muted);
+    font-size: clamp(18px, 2.2vw, 22px);
+    line-height: 1.45;
+    letter-spacing: -.005em;
+  }
 
-.litany-item.is-kein strong {
-  font-weight: 800;
-}
+  /* ─── Section base ─── */
+  section { padding: 56px 0; }
 
-.litany-item.is-ist {
-  color: var(--ink-accent);
-}
+  .section-title {
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.06;
+    letter-spacing: -.03em;
+    margin: 0 auto 16px;
+    max-width: 18ch;
+    text-align: center;
+    font-weight: 760;
+  }
 
-/* ─── Closing ─── */
+  .section-lead {
+    max-width: 640px;
+    margin: 0 auto 40px;
+    color: var(--muted);
+    font-size: clamp(17px, 1.9vw, 20px);
+    line-height: 1.5;
+    text-align: center;
+  }
 
-.manifesto-close {
-  text-align: center;
-  padding-top: clamp(48px, 8vh, 80px);
-}
-
-.manifesto-close-text {
-  font-size: clamp(22px, 3.6vw, 36px);
-  font-weight: 800;
-  line-height: 1.25;
-  letter-spacing: -0.025em;
-  max-width: 30ch;
-  margin: 0 auto;
-}
-
-.manifesto-close-primary {
-  display: block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  will-change: background-image;
-  margin-bottom: 0.25em;
-}
-
-.manifesto-close-accent {
-  display: block;
-  color: var(--ink-accent);
-  font-weight: 800;
-}
-
-/* ─── Footer ─── */
-
-.manifesto-foot {
-  margin-top: clamp(56px, 10vh, 96px);
-  padding-top: clamp(32px, 5vh, 48px);
-  display: flex;
-  flex-direction: column;
-  gap: clamp(16px, 3vh, 20px);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  text-align: left;
-}
-
-@media (min-width: 768px) {
-  .manifesto-foot {
-    gap: 14px;
+  .section-kicker {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
     font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 14px;
   }
-}
 
-.foot-primary {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  color: var(--ink-soft);
-  letter-spacing: 0.14em;
-}
+  /* ─── Layer Grid (Six Layers Overview) ─── */
+  .layers {
+    display: grid;
+    gap: 14px;
+  }
 
-.foot-item {
-  display: block;
-}
+  .layer {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 18px;
+    padding: 22px 24px;
+    border-radius: var(--radius-lg);
+    background: rgba(255,255,255,.94);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-soft);
+    text-align: left;
+  }
 
-@media (min-width: 768px) {
-  .foot-primary {
-    flex-direction: row;
+  .layer-num {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: var(--blue-soft);
+    color: var(--blue);
+    font-size: 16px;
+    font-weight: 850;
+    letter-spacing: -.01em;
+  }
+
+  .layer h3 {
+    margin: 0 0 4px;
+    font-size: 21px;
+    letter-spacing: -.015em;
+    font-weight: 700;
+  }
+  .layer p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+
+  /* ─── Foundations Block ─── */
+  .foundation-card {
+    background: rgba(255,255,255,.94);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: clamp(28px, 4vw, 56px);
+    box-shadow: var(--shadow);
+  }
+
+  .foundation-statement {
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.25;
+    letter-spacing: -.02em;
+    margin: 0 0 24px;
+    font-weight: 600;
+  }
+
+  .foundation-sub {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ─── Pattern Card ─── */
+  .pattern {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: clamp(24px, 3vw, 40px);
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 18px;
+  }
+
+  .pattern-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .pattern-num {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: #f5f5f7;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 850;
+    letter-spacing: 0.02em;
+  }
+
+  .pattern-head h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+  }
+
+  .pattern-tagline {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .pattern-body {
+    display: grid;
+    gap: 24px;
+  }
+
+  .pattern-row {
+    display: grid;
+    gap: 8px;
+  }
+
+  .pattern-label {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .pattern-text {
+    margin: 0;
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .pattern-text.muted { color: var(--muted); }
+
+  .pattern-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+
+  .pattern-list li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 10px;
+    align-items: start;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .pattern-list li::before {
+    content: "—";
+    color: var(--soft);
+  }
+
+  .pattern-quote {
+    background: var(--blue-soft);
+    color: var(--text);
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .pattern-quote-source {
+    display: block;
+    margin-top: 8px;
+    font-style: normal;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* ─── Component sample ─── */
+  .component-row {
+    display: flex;
     flex-wrap: wrap;
-    gap: 0.75em;
+    gap: 8px;
+    align-items: center;
   }
-}
 
-.foot-impressum {
-  color: var(--ink-mute);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  line-height: 1.5;
-}
-
-@media (min-width: 768px) {
-  .foot-impressum {
-    font-size: 10px;
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 750;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: #f5f5f7;
+    color: var(--muted);
   }
-}
+  .status-chip.open { background: var(--orange-soft); color: var(--orange); }
+  .status-chip.done { background: var(--green-soft); color: var(--green); }
+  .status-chip.found { background: var(--blue-soft); color: var(--blue); }
+  .status-chip.expiring { background: #f5f5f7; color: var(--muted); }
+  .status-chip.expired { background: #f5f5f7; color: var(--soft); opacity: 0.6; }
 
-/* ════════════════════════════════════════════════════════════════════
-   SELECTION & MOTION
-   ════════════════════════════════════════════════════════════════════ */
-
-::selection {
-  background: var(--ink-accent);
-  color: var(--paper);
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .emoji-sample-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
   }
-  .hero-word, .scroll-indicator {
-    opacity: 1 !important;
-    transform: none !important;
+
+  .emoji-sample {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #f5f5f7;
+    font-size: 24px;
   }
-  .scroll-indicator { transform: translateX(-50%) !important; }
-}
+
+  /* ─── Voice / Tone table ─── */
+  .voice-grid {
+    display: grid;
+    gap: 14px;
+  }
+
+  .voice-row {
+    display: grid;
+    gap: 10px;
+    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.94);
+  }
+
+  .voice-row .vlabel {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .voice-pair {
+    display: grid;
+    gap: 8px;
+  }
+
+  .voice-pair .v-bad {
+    color: var(--red);
+    font-size: 15px;
+    text-decoration: line-through;
+    text-decoration-color: rgba(201,52,47,0.4);
+  }
+  .voice-pair .v-good {
+    color: var(--green);
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* ─── Anti-Patterns ─── */
+  .antipattern {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--red);
+    border-radius: var(--radius-md);
+    padding: 22px 24px;
+    margin-bottom: 12px;
+  }
+
+  .antipattern-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .antipattern-num {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    background: var(--red-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .antipattern-head h4 {
+    margin: 0;
+    font-size: 19px;
+    letter-spacing: -.012em;
+    font-weight: 700;
+  }
+
+  .antipattern-text { color: var(--text); margin: 0 0 8px; font-size: 15px; line-height: 1.55; }
+  .antipattern-text.muted { color: var(--muted); margin-top: 8px; }
+  .antipattern-because {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin: 8px 0 0;
+  }
+  .antipattern-because strong { color: var(--text); font-weight: 700; }
+
+  /* ─── Reference examples ─── */
+  .examples {
+    display: grid;
+    gap: 18px;
+  }
+
+  .example-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .example-tag {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+
+  .example-card h3 { margin: 0 0 10px; font-size: 22px; letter-spacing: -.015em; font-weight: 700; }
+  .example-card p { color: var(--muted); margin: 0 0 14px; font-size: 15px; line-height: 1.55; }
+
+  .example-features {
+    display: grid;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .example-features li {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 8px;
+    list-style: none;
+  }
+  .example-features li::before {
+    content: "✓";
+    color: var(--green);
+    font-weight: 800;
+  }
+
+  /* ─── Public Data Sources ─── */
+  .data-sources {
+    display: grid;
+    gap: 12px;
+  }
+  .data-source {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 18px;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    background: rgba(255,255,255,.94);
+    border: 1px solid var(--line);
+  }
+  .data-source-tag {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .data-source-name { font-weight: 700; font-size: 16px; margin: 0 0 2px; }
+  .data-source-desc { color: var(--muted); font-size: 14px; margin: 0; }
+
+  /* ─── Compliance Checklist ─── */
+  .compliance {
+    display: grid;
+    gap: 0;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .compliance-item {
+    display: grid;
+    grid-template-columns: 32px 1fr 100px;
+    gap: 16px;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  .compliance-item:last-child { border-bottom: none; }
+
+  .compliance-num {
+    font-variant-numeric: tabular-nums;
+    color: var(--soft);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .compliance-text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .compliance-state {
+    font-size: 12px;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: right;
+  }
+  .compliance-state.required { color: var(--red); }
+  .compliance-state.recommended { color: var(--orange); }
+
+  /* ─── Quote Block ─── */
+  .quote-block {
+    background: linear-gradient(135deg, #111113, #2b2b31);
+    color: #fff;
+    border-radius: var(--radius-xl);
+    padding: clamp(40px, 6vw, 80px);
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .quote-block p {
+    margin: 0 auto;
+    max-width: 760px;
+    font-size: clamp(26px, 4vw, 44px);
+    line-height: 1.18;
+    letter-spacing: -.025em;
+    font-weight: 720;
+  }
+
+  .quote-block small {
+    display: block;
+    margin-top: 24px;
+    color: rgba(255,255,255,.65);
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    border-top: 1px solid var(--line);
+    background: #f5f5f7;
+    padding: 36px 0 56px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  footer strong { color: var(--text); }
+  .footer-grid { display: grid; gap: 14px; }
+
+  /* ─── Responsive ─── */
+  @media (min-width: 740px) {
+    .nav-links { display: flex; }
+    .layers { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .pattern-body { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 32px; }
+    .examples { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .voice-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .footer-grid { grid-template-columns: 1fr auto; align-items: start; }
+  }
+
+  @media (min-width: 1020px) {
+    .layers { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .voice-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    section { padding: 80px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
 </style>
 </head>
 
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════════════
-     HERO
-     ═══════════════════════════════════════════════════════════════════ -->
+<header class="site-header">
+  <nav class="nav">
+    <div class="brand">Bürgerplatz<span class="brand-sub">· HIG</span></div>
+    <div class="nav-links">
+      <a href="#foundations">Foundations</a>
+      <a href="#patterns">Patterns</a>
+      <a href="#components">Components</a>
+      <a href="#content">Content</a>
+      <a href="#anti">Anti-Patterns</a>
+      <a href="#compliance">Compliance</a>
+    </div>
+  </nav>
+</header>
 
-<section class="stage">
-  <h1 class="hero-word" id="hero"><span class="hero-part-first">Bürger</span><span class="hero-break" aria-hidden="true"></span><span class="hero-part-second">platz</span></h1>
+<main>
 
-  <div class="scroll-indicator" id="scroll-indicator">
-    Das Manifest
-    <span class="scroll-indicator-line" aria-hidden="true"></span>
-  </div>
-</section>
+  <!-- ───────────────────────────────────────── HERO ─── -->
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Human Interface Guidelines · v1.0</div>
+      <h1>Eine demokratische Grammatik für Software.</h1>
+      <p class="lead">Diese Guidelines beschreiben, wie Bürgerplätze gebaut werden. Sie sind das Werkzeug, mit dem aus dem Begriff ein Standard wird — und aus dem Manifest eine Bauweise.</p>
+    </div>
+  </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════
-     MANIFESTO — 10 + 10 litany
-     ═══════════════════════════════════════════════════════════════════ -->
+  <!-- ───────────────────────────────────────── ORIENTATION ─── -->
+  <section>
+    <div class="container-narrow">
+      <div class="foundation-card">
+        <p class="foundation-statement">
+          Software ist nicht neutral. Jede Oberfläche hat eine Grammatik. Diese Guidelines machen die Grammatik des Bürgerplatzes <strong>operationalisierbar</strong> — als Patterns, Components, Content-Regeln und Anti-Patterns, an denen sich jeder konkrete digitale Raum messen lassen muss.
+        </p>
+        <p class="foundation-sub">
+          Wer einen Bürgerplatz bauen will, hält sich an diese Guidelines. Wer sich nicht an sie hält, baut etwas anderes — vielleicht ein Portal, vielleicht eine Plattform, aber keinen Bürgerplatz.
+        </p>
+      </div>
+    </div>
+  </section>
 
-<section class="manifesto">
-  <div class="manifesto-inner">
+  <!-- ───────────────────────────────────────── SIX LAYERS ─── -->
+  <section>
+    <div class="container">
+      <div class="section-kicker">Architektur</div>
+      <h2 class="section-title">Sechs Schichten.</h2>
+      <p class="section-lead">Jede Bürgerplatz-Implementierung wird gegen sechs Schichten gemessen — von der Philosophie bis zur Compliance-Checkliste.</p>
 
-    <div class="manifesto-kicker">Das Manifest</div>
+      <div class="layers">
+        <article class="layer">
+          <div class="layer-num">01</div>
+          <div>
+            <h3>Foundations</h3>
+            <p>Die philosophischen Grundsätze. Demokratische Begegnung statt Aufmerksamkeitsökonomie.</p>
+          </div>
+        </article>
+        <article class="layer">
+          <div class="layer-num">02</div>
+          <div>
+            <h3>Patterns</h3>
+            <p>Die wiederkehrenden Lösungen. Anliegen einstellen, suchen, antworten, vergessen.</p>
+          </div>
+        </article>
+        <article class="layer">
+          <div class="layer-num">03</div>
+          <div>
+            <h3>Components</h3>
+            <p>Die einzelnen Bausteine. Status-Chip, Kategorie-Wahl, Emoji-Vokabular, Trust-Badge.</p>
+          </div>
+        </article>
+        <article class="layer">
+          <div class="layer-num">04</div>
+          <div>
+            <h3>Content</h3>
+            <p>Voice und Tone. Wie der Bürgerplatz spricht — sachlich, lokal, ohne Plattform-Sprache.</p>
+          </div>
+        </article>
+        <article class="layer">
+          <div class="layer-num">05</div>
+          <div>
+            <h3>Accessibility</h3>
+            <p>Sprache, Tastatur, Screenreader, niedrige Bandbreite. Barrierefrei als Voraussetzung.</p>
+          </div>
+        </article>
+        <article class="layer">
+          <div class="layer-num">06</div>
+          <div>
+            <h3>Anti-Patterns</h3>
+            <p>Was niemals erlaubt ist — auch wenn die Bibliothek es technisch ermöglicht.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-    <div class="litany">
+  <!-- ───────────────────────────────────────── 1. FOUNDATIONS ─── -->
+  <section id="foundations">
+    <div class="container-narrow">
+      <div class="section-kicker">Schicht 01 · Foundations</div>
+      <h2 class="section-title">Die Grammatik beginnt mit Haltung.</h2>
+      <p class="section-lead">Bevor irgendein Pixel gesetzt wird: was glauben wir über Software und Demokratie?</p>
 
-      <div class="litany-col">
-        <div class="litany-head is-kein">Was es nicht ist</div>
-        <ul class="litany-list">
-          <li class="litany-item is-kein"><strong>Keine</strong> Überwachung.</li>
-          <li class="litany-item is-kein"><strong>Keine</strong> Empörung.</li>
-          <li class="litany-item is-kein"><strong>Kein</strong> Tracking.</li>
-          <li class="litany-item is-kein"><strong>Kein</strong> Profil.</li>
-          <li class="litany-item is-kein"><strong>Kein</strong> Algorithmus.</li>
-          <li class="litany-item is-kein"><strong>Keine</strong> Konkurrenz.</li>
-          <li class="litany-item is-kein"><strong>Keine</strong> Reichweite.</li>
-          <li class="litany-item is-kein"><strong>Keine</strong> Werbung.</li>
-          <li class="litany-item is-kein"><strong>Kein</strong> Geschäftsmodell.</li>
-          <li class="litany-item is-kein"><strong>Keine</strong> Abhängigkeit.</li>
+      <div class="foundation-card" style="margin-bottom: 18px;">
+        <p class="pattern-label">Grundsatz 01</p>
+        <p class="foundation-statement" style="font-size: 22px;">Der Bürger ist der Zweck, nicht das Produkt.</p>
+        <p class="foundation-sub">Jede Designentscheidung wird daran gemessen, ob sie den Bürger zur Begegnung befähigt — nicht, ob sie seine Aufmerksamkeit verwertet.</p>
+      </div>
+
+      <div class="foundation-card" style="margin-bottom: 18px;">
+        <p class="pattern-label">Grundsatz 02</p>
+        <p class="foundation-statement" style="font-size: 22px;">Begrenzung schützt Freiheit.</p>
+        <p class="foundation-sub">Was die Oberfläche bewusst weglässt, ist genauso wichtig wie das, was sie ermöglicht. Likes, Profile, Reichweite — diese Dinge fehlen nicht, weil wir sie nicht bauen können. Sie fehlen, weil wir sie nicht bauen wollen.</p>
+      </div>
+
+      <div class="foundation-card" style="margin-bottom: 18px;">
+        <p class="pattern-label">Grundsatz 03</p>
+        <p class="foundation-statement" style="font-size: 22px;">Vorauswahl statt Freitext.</p>
+        <p class="foundation-sub">Wo immer möglich, bietet der Bürgerplatz strukturierte Auswahl statt Eingabefeld. Kategorien, Status, Ortsangaben, Emoji-Vokabular. Strukturierte Eingabe ist demokratisch — weil sie alle gleich behandelt und Eskalation strukturell verhindert.</p>
+      </div>
+
+      <div class="foundation-card" style="margin-bottom: 18px;">
+        <p class="pattern-label">Grundsatz 04</p>
+        <p class="foundation-statement" style="font-size: 22px;">Öffentliche Daten zuerst.</p>
+        <p class="foundation-sub">Wo öffentliche, verifizierte Datenquellen existieren — DWD, BSH, Fährbetreiber, Pressemitteilungen — werden sie genutzt. Sie ersetzen Spekulation, reduzieren Moderationsaufwand und liefern sofortigen Nutzen, auch ohne Nutzereinträge.</p>
+      </div>
+
+      <div class="foundation-card" style="margin-bottom: 18px;">
+        <p class="pattern-label">Grundsatz 05</p>
+        <p class="foundation-statement" style="font-size: 22px;">Bilder zur Wiedererkennung, nicht zur Selbstdarstellung.</p>
+        <p class="foundation-sub">Hochgeladene Bilder dienen ausschließlich der KI-gestützten Wiedererkennung — etwa beim Abgleich von Verlust und Fund. Sie werden nicht öffentlich angezeigt, nicht profiliert, nicht in Feeds eingebaut. Der Bürgerplatz ist kein Foto-Service.</p>
+      </div>
+
+      <div class="foundation-card">
+        <p class="pattern-label">Grundsatz 06</p>
+        <p class="foundation-statement" style="font-size: 22px;">Vergessen ist eine Funktion.</p>
+        <p class="foundation-sub">Jeder Eintrag hat ein Ablaufdatum. Der Raum vergisst von selbst. Kein Archiv ewiger Profile, keine Akkumulation, keine permanente Identitätskonstruktion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────────── 2. PATTERNS ─── -->
+  <section id="patterns">
+    <div class="container">
+      <div class="section-kicker">Schicht 02 · Patterns</div>
+      <h2 class="section-title">Wiederkehrende Lösungen.</h2>
+      <p class="section-lead">Sechs Patterns, an denen sich jede Bürgerplatz-Anwendung orientiert. Jedes Pattern hat dieselbe Struktur: Anatomie, wann verwenden, wann nicht, sprachliche Konvention, Anti-Pattern.</p>
+
+      <article class="pattern">
+        <div class="pattern-head">
+          <div class="pattern-num">01</div>
+          <div>
+            <h3>Anliegen einstellen</h3>
+            <p class="pattern-tagline">Strukturierte Vorauswahl statt freier Post.</p>
+          </div>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <div class="pattern-label">Anatomie</div>
+            <ul class="pattern-list">
+              <li>Schritt 1: Kategorie wählen (visuelle Emoji-Auswahl)</li>
+              <li>Schritt 2: Optional Bild für KI-Wiedererkennung hochladen</li>
+              <li>Schritt 3: Ort angeben (Karte oder Adresse)</li>
+              <li>Schritt 4: Kurze Beschreibung (max 280 Zeichen)</li>
+              <li>Schritt 5: Ablaufdatum bestätigen (Default je Kategorie)</li>
+              <li>Schritt 6: Anonymen Antwort-Token erhalten</li>
+            </ul>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Wann verwenden</div>
+            <p class="pattern-text">Bei jedem konkreten Anliegen mit Lebenszyklus: Fundsache, Hilfegesuch, Veranstaltung, lokales Angebot, Vereinseinladung.</p>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Wann nicht verwenden</div>
+            <p class="pattern-text muted">Für Diskussionen, Meinungsäußerungen, Bewertungen, persönliche Posts. Diese gehören nicht in einen Bürgerplatz.</p>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Sprachliche Konvention</div>
+            <p class="pattern-text">Der Button heißt nicht <em>Posten</em>, sondern <em>Anliegen einstellen</em> oder <em>Sichtbar machen</em>. Die Bestätigungsnachricht heißt nicht <em>Beitrag erfolgreich veröffentlicht</em>, sondern <em>Ihr Anliegen ist sichtbar bis zum [Datum].</em></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="pattern">
+        <div class="pattern-head">
+          <div class="pattern-num">02</div>
+          <div>
+            <h3>Suchen mit Sprache</h3>
+            <p class="pattern-tagline">Spracheingabe oder Text — beides geht ohne Konto.</p>
+          </div>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <div class="pattern-label">Anatomie</div>
+            <ul class="pattern-list">
+              <li>Mikrofon-Button als Primärweg, prominent positioniert</li>
+              <li>Texteingabe als gleichwertige Alternative, nicht Fallback</li>
+              <li>KI-gestützter Abgleich der Beschreibung mit eingestellten Anliegen</li>
+              <li>Treffer werden gleichberechtigt nach Aktualität und Nähe sortiert</li>
+              <li>Keine Personalisierung der Suchergebnisse, kein Verlauf</li>
+            </ul>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Wann verwenden</div>
+            <p class="pattern-text">In jeder Such-Situation. Sprache ist besonders wichtig für ältere Nutzer und Menschen mit motorischen Einschränkungen.</p>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Datenpolitik</div>
+            <p class="pattern-text">Sprachdaten werden lokal verarbeitet oder bei verifizierten öffentlichen Anbietern in der EU. Keine Sprachaufnahme verlässt den Verarbeitungskontext für andere Zwecke.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="pattern">
+        <div class="pattern-head">
+          <div class="pattern-num">03</div>
+          <div>
+            <h3>Antworten mit Token</h3>
+            <p class="pattern-tagline">Zweckgebundener Kontakt ohne öffentliche Bühne.</p>
+          </div>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <div class="pattern-label">Anatomie</div>
+            <ul class="pattern-list">
+              <li>Antwort-Button am Anliegen, nicht Kommentar-Feld</li>
+              <li>Antwort wird per E-Mail-Token oder anonymem Link zugestellt</li>
+              <li>Keine öffentliche Sichtbarkeit der Antwort</li>
+              <li>Keine Verlaufs-Anzeige &quot;Wie viele haben geantwortet&quot;</li>
+            </ul>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Wann verwenden</div>
+            <p class="pattern-text">Standardweg für jede Reaktion auf ein Anliegen.</p>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Wann nicht verwenden</div>
+            <p class="pattern-text muted">Niemals als öffentliche Diskussion. Niemals als Kommentarspalte unter dem Anliegen. Antworten sind privat zwischen Anliegensteller und Antwortendem.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="pattern">
+        <div class="pattern-head">
+          <div class="pattern-num">04</div>
+          <div>
+            <h3>Kategorisieren mit Emoji</h3>
+            <p class="pattern-tagline">Visuelles Vokabular als bewusste UI-Sprache.</p>
+          </div>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <div class="pattern-label">Anatomie</div>
+            <ul class="pattern-list">
+              <li>Kuratiertes, festes Emoji-Set pro Modul</li>
+              <li>Niemals freie Auswahl aus dem gesamten Unicode-Repertoire</li>
+              <li>Konsistente Verwendung über alle Ansichten</li>
+              <li>Begleitet von Textlabel, nicht ersetzend</li>
+            </ul>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Beispiel · Fundbüro-Kategorien</div>
+            <div class="emoji-sample-row">
+              <span class="emoji-sample">👛</span>
+              <span class="emoji-sample">🎒</span>
+              <span class="emoji-sample">🧥</span>
+              <span class="emoji-sample">👟</span>
+              <span class="emoji-sample">👓</span>
+              <span class="emoji-sample">📱</span>
+              <span class="emoji-sample">🔑</span>
+              <span class="emoji-sample">⌚</span>
+              <span class="emoji-sample">🚲</span>
+              <span class="emoji-sample">☂️</span>
+              <span class="emoji-sample">💍</span>
+            </div>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Begründung</div>
+            <p class="pattern-text">Emoji als kuratierte Kategoriensprache funktioniert sprachübergreifend, ist sofort verständlich, reduziert Lesezeit. Wichtig: Kein Emoji-Theater, keine Reaktions-Emojis, keine freie Eingabe von Emoji im Beschreibungstext über das vorgesehene Vokabular hinaus.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="pattern">
+        <div class="pattern-head">
+          <div class="pattern-num">05</div>
+          <div>
+            <h3>Status statt Likes</h3>
+            <p class="pattern-tagline">Lebenszyklus-Anzeige, keine Beliebtheitsanzeige.</p>
+          </div>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <div class="pattern-label">Beispielwerte</div>
+            <div class="component-row">
+              <span class="status-chip open">offen</span>
+              <span class="status-chip done">erledigt</span>
+              <span class="status-chip found">gefunden</span>
+              <span class="status-chip expiring">läuft heute ab</span>
+              <span class="status-chip expired">abgelaufen</span>
+            </div>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Anatomie</div>
+            <ul class="pattern-list">
+              <li>Kapsel-Form, Border-Radius unendlich</li>
+              <li>Schriftgröße 13px, Gewicht 750</li>
+              <li>Maximal fünf Status pro Modul</li>
+              <li>Kategoriespezifische Farbe, niemals neutral grau für Aktion</li>
+            </ul>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Niemals erlaubt</div>
+            <p class="pattern-text muted">Numerische Counter (5 hilfreich, 12 Reaktionen). Emoji-Reaktionen. Kommentar-Anzahl. Trending-Markierung.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="pattern">
+        <div class="pattern-head">
+          <div class="pattern-num">06</div>
+          <div>
+            <h3>Vergessen mit Ablaufdatum</h3>
+            <p class="pattern-tagline">Standardlebensdauer pro Kategorie.</p>
+          </div>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <div class="pattern-label">Default-Lebensdauer</div>
+            <ul class="pattern-list">
+              <li>Fundsachen: 14 Tage, dann gelöscht</li>
+              <li>Hilfegesuche: 7 Tage, dann gelöscht</li>
+              <li>Veranstaltungen: bis zum Datum + 1 Tag, dann archiviert</li>
+              <li>Vereinsinfos: 12 Monate, dann zur Pflege erinnert</li>
+              <li>Lokale Hinweise: 30 Tage, dann gelöscht</li>
+              <li>Live-Daten (Wetter, Tide, Fähre): kontinuierlich aktualisiert</li>
+            </ul>
+          </div>
+          <div class="pattern-row">
+            <div class="pattern-label">Sprachliche Konvention</div>
+            <p class="pattern-text">Statt <em>Eintrag wurde gelöscht</em> sagen wir <em>Dieser Eintrag hat seine Zeit gehabt.</em> Das ist menschlicher und macht Vergessen zu einer Funktion, nicht zu einem Defekt.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────────── 3. COMPONENTS ─── -->
+  <section id="components">
+    <div class="container">
+      <div class="section-kicker">Schicht 03 · Components</div>
+      <h2 class="section-title">Bausteine.</h2>
+      <p class="section-lead">Konkrete UI-Elemente. Hier nur die wichtigsten — die vollständige Component-Library wird mit der ersten Implementierung dokumentiert.</p>
+
+      <article class="pattern">
+        <div class="pattern-head">
+          <div class="pattern-num">3.1</div>
+          <div>
+            <h3>Trust-Badge</h3>
+            <p class="pattern-tagline">Sichtbare Vertrauenssignale ohne Marketing-Sprache.</p>
+          </div>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <div class="pattern-label">Anatomie</div>
+            <ul class="pattern-list">
+              <li>Kapsel-Form mit Häkchen-SVG, niemals Bild</li>
+              <li>Maximal drei Trust-Badges pro Ansicht</li>
+              <li>Nur verifizierbare Standards: <em>Datenschutzkonform</em>, <em>OZG / XÖV / FIT-Connect</em>, <em>Gehostet bei Dataport</em></li>
+              <li>Niemals Marketingclaims wie <em>Beste App</em> oder <em>Vertraue uns</em></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="pattern">
+        <div class="pattern-head">
+          <div class="pattern-num">3.2</div>
+          <div>
+            <h3>Action-Tile</h3>
+            <p class="pattern-tagline">Hauptaktionen als Karten mit Emoji-Wegweiser.</p>
+          </div>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <div class="pattern-label">Anatomie</div>
+            <ul class="pattern-list">
+              <li>Quadratische Emoji-Box links, 42×42 Pixel</li>
+              <li>Titel und kurze Erläuterung in der Mitte</li>
+              <li>Chevron rechts als Affordance</li>
+              <li>Hintergrund weiß, leichter Hover-Zustand</li>
+              <li>Niemals mehr als sechs Tiles pro Ansicht</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="pattern">
+        <div class="pattern-head">
+          <div class="pattern-num">3.3</div>
+          <div>
+            <h3>Mikrofon-Button</h3>
+            <p class="pattern-tagline">Sprache als Erstklasse-Eingabe.</p>
+          </div>
+        </div>
+        <div class="pattern-body">
+          <div class="pattern-row">
+            <div class="pattern-label">Anatomie</div>
+            <ul class="pattern-list">
+              <li>Runder Button, 80×80 Pixel auf Mobile, 100×100 auf Desktop</li>
+              <li>Zustände: <em>idle</em>, <em>listening</em>, <em>processing</em>, <em>error</em></li>
+              <li>Subtiles Pulse-Animation im listening-Zustand, prefers-reduced-motion respektiert</li>
+              <li>Klare Sprach-Indikator-Wellen während Aufnahme</li>
+              <li>Tippen-Label darunter: <em>Tippen um zu sprechen</em></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────────── 4. CONTENT ─── -->
+  <section id="content">
+    <div class="container">
+      <div class="section-kicker">Schicht 04 · Content</div>
+      <h2 class="section-title">Voice und Tone.</h2>
+      <p class="section-lead">Wie der Bürgerplatz spricht. Sprache ist Architektur. Falsche Wörter zerstören die Grammatik so sicher wie falsche Buttons.</p>
+
+      <div class="voice-grid">
+        <article class="voice-row">
+          <span class="vlabel">Button-Sprache</span>
+          <div class="voice-pair">
+            <div class="v-bad">Posten</div>
+            <div class="v-good">Anliegen einstellen</div>
+          </div>
+          <div class="voice-pair">
+            <div class="v-bad">Speichern</div>
+            <div class="v-good">Sichtbar machen</div>
+          </div>
+          <div class="voice-pair">
+            <div class="v-bad">Antworten</div>
+            <div class="v-good">Kontakt aufnehmen</div>
+          </div>
+        </article>
+
+        <article class="voice-row">
+          <span class="vlabel">Bestätigungen</span>
+          <div class="voice-pair">
+            <div class="v-bad">Beitrag erfolgreich veröffentlicht</div>
+            <div class="v-good">Ihr Anliegen ist sichtbar bis zum 14.05.</div>
+          </div>
+          <div class="voice-pair">
+            <div class="v-bad">Sie sind online</div>
+            <div class="v-good">Willkommen auf dem Bürgerplatz Föhr</div>
+          </div>
+        </article>
+
+        <article class="voice-row">
+          <span class="vlabel">Ablauf-Hinweise</span>
+          <div class="voice-pair">
+            <div class="v-bad">Eintrag wurde gelöscht</div>
+            <div class="v-good">Dieser Eintrag hat seine Zeit gehabt.</div>
+          </div>
+          <div class="voice-pair">
+            <div class="v-bad">Beitrag läuft ab in 2 Tagen</div>
+            <div class="v-good">Noch sichtbar bis Mittwoch</div>
+          </div>
+        </article>
+
+        <article class="voice-row">
+          <span class="vlabel">Personenrollen</span>
+          <div class="voice-pair">
+            <div class="v-bad">Nutzer · User · Mitglied</div>
+            <div class="v-good">Bürgerin · Bürger · Nachbarin</div>
+          </div>
+          <div class="voice-pair">
+            <div class="v-bad">Account · Profil · Konto</div>
+            <div class="v-good">Anliegen · Eintrag · Hinweis</div>
+          </div>
+        </article>
+
+        <article class="voice-row">
+          <span class="vlabel">Erfolg</span>
+          <div class="voice-pair">
+            <div class="v-bad">12 hilfreich</div>
+            <div class="v-good">erledigt</div>
+          </div>
+          <div class="voice-pair">
+            <div class="v-bad">Trending</div>
+            <div class="v-good">heute neu</div>
+          </div>
+        </article>
+
+        <article class="voice-row">
+          <span class="vlabel">Misserfolg</span>
+          <div class="voice-pair">
+            <div class="v-bad">Etwas ist schiefgelaufen</div>
+            <div class="v-good">Diese Aktion war nicht möglich. So geht es weiter: …</div>
+          </div>
+          <div class="voice-pair">
+            <div class="v-bad">404 Not Found</div>
+            <div class="v-good">Dieses Anliegen gibt es nicht mehr. Es hat seine Zeit gehabt.</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────────── DATA SOURCES ─── -->
+  <section>
+    <div class="container">
+      <div class="section-kicker">Datenstandards</div>
+      <h2 class="section-title">Öffentliche Daten zuerst.</h2>
+      <p class="section-lead">Ein Bürgerplatz lebt nicht von User-Generated-Content allein. Er nutzt verifizierte öffentliche Datenquellen — und reduziert dadurch Moderationsaufwand und Spekulation.</p>
+
+      <div class="data-sources">
+        <div class="data-source">
+          <span class="data-source-tag">DWD</span>
+          <div>
+            <p class="data-source-name">Deutscher Wetterdienst</p>
+            <p class="data-source-desc">Wetter, Pollenflug, Sturmwarnungen, Sichtweite. Open-Data-Schnittstelle, EU-konform.</p>
+          </div>
+        </div>
+        <div class="data-source">
+          <span class="data-source-tag">BSH</span>
+          <div>
+            <p class="data-source-name">Bundesamt für Seeschifffahrt und Hydrographie</p>
+            <p class="data-source-desc">Tide, Wassertemperatur, Sturmfluten. Lebenswichtig für Inselregionen.</p>
+          </div>
+        </div>
+        <div class="data-source">
+          <span class="data-source-tag">Fähre</span>
+          <div>
+            <p class="data-source-name">Fährbetreiber-Schnittstellen</p>
+            <p class="data-source-desc">Echtzeit-Fahrpläne, Verspätungen, Ausfälle. Direkt von der Quelle.</p>
+          </div>
+        </div>
+        <div class="data-source">
+          <span class="data-source-tag">ADSB</span>
+          <div>
+            <p class="data-source-name">Flug-Tracking</p>
+            <p class="data-source-desc">Inselverbindung Hamburg–Föhr–Sylt. Öffentliche Transponder-Daten.</p>
+          </div>
+        </div>
+        <div class="data-source">
+          <span class="data-source-tag">RSS</span>
+          <div>
+            <p class="data-source-name">Verifizierte lokale Verlage</p>
+            <p class="data-source-desc">SHZ, Föhrer Nachrichten, NDR, amtliche Pressemitteilungen. Kein Aggregator, keine Spekulation.</p>
+          </div>
+        </div>
+        <div class="data-source">
+          <span class="data-source-tag">iCal</span>
+          <div>
+            <p class="data-source-name">Veranstaltungskalender</p>
+            <p class="data-source-desc">Vereine, Museen, Kirchen, Kommune. Direkt von den Akteuren, nicht abgetippt.</p>
+          </div>
+        </div>
+        <div class="data-source">
+          <span class="data-source-tag">OSM</span>
+          <div>
+            <p class="data-source-name">OpenStreetMap</p>
+            <p class="data-source-desc">Karten, Adressen, Geo-Information. Offen, gemeinwohlorientiert, ohne Tracking.</p>
+          </div>
+        </div>
+        <div class="data-source">
+          <span class="data-source-tag">Sun</span>
+          <div>
+            <p class="data-source-name">Sonnenstand-API</p>
+            <p class="data-source-desc">Goldene Stunde, blaue Stunde, Sonnenauf- und untergang. Astronomisch berechnet, deterministisch.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────────── 5. ACCESSIBILITY ─── -->
+  <section>
+    <div class="container-narrow">
+      <div class="section-kicker">Schicht 05 · Accessibility</div>
+      <h2 class="section-title">Barrierearmut ist Voraussetzung.</h2>
+      <p class="section-lead">Wer einen Bürgerplatz baut, baut für Ältere, Zugezogene, Menschen mit Behinderungen, Menschen mit niedriger Bandbreite, Menschen ohne Smartphone. Sonst ist es kein Bürgerplatz.</p>
+
+      <div class="foundation-card">
+        <p class="pattern-label">Mindestanforderungen</p>
+        <ul class="pattern-list" style="margin-top: 16px;">
+          <li>Vollständige Tastaturnavigation, ohne Maus</li>
+          <li>WCAG 2.2 AA als Minimum, AAA als Ziel</li>
+          <li>Alle Aktionen ohne JavaScript erreichbar (Progressive Enhancement)</li>
+          <li>Klare Fokus-Indikatoren mit hohem Kontrast</li>
+          <li>Spracheingabe als gleichwertige Eingabemethode</li>
+          <li>Bildbeschreibungen für KI-Bilderkennung, niemals Bilder ohne Alt-Text</li>
+          <li>prefers-reduced-motion respektieren</li>
+          <li>Funktionsfähigkeit ohne Cookies</li>
+          <li>Funktionsfähigkeit auf 3G-Bandbreite</li>
+          <li>Druckansicht für jeden Eintrag (Aushang am schwarzen Brett)</li>
         </ul>
       </div>
+    </div>
+  </section>
 
-      <div class="litany-col">
-        <div class="litany-head is-ist">Was es ist</div>
-        <ul class="litany-list">
-          <li class="litany-item is-ist">Vertrauen.</li>
-          <li class="litany-item is-ist">Freundlichkeit.</li>
-          <li class="litany-item is-ist">Menschlich.</li>
-          <li class="litany-item is-ist">Nachbarschaft.</li>
-          <li class="litany-item is-ist">Gleichberechtigt.</li>
-          <li class="litany-item is-ist">Kooperation.</li>
-          <li class="litany-item is-ist">Öffentlichkeit.</li>
-          <li class="litany-item is-ist">Gemeinwohl.</li>
-          <li class="litany-item is-ist">Souveränität.</li>
-          <li class="litany-item is-ist">Unabhängigkeit.</li>
-        </ul>
+  <!-- ───────────────────────────────────────── 6. ANTI-PATTERNS ─── -->
+  <section id="anti">
+    <div class="container">
+      <div class="section-kicker">Schicht 06 · Anti-Patterns</div>
+      <h2 class="section-title">Was niemals erlaubt ist.</h2>
+      <p class="section-lead">Diese Muster sind in jeder Bürgerplatz-Implementierung verboten — auch wenn die verwendete Bibliothek sie technisch ermöglicht. Verstoß macht den Raum zu etwas anderem als einem Bürgerplatz.</p>
+
+      <article class="antipattern">
+        <div class="antipattern-head">
+          <span class="antipattern-num">Anti 01</span>
+          <h4>Likes, Reactions, Hearts</h4>
+        </div>
+        <p class="antipattern-text">Keine numerischen oder symbolischen Beliebtheitsanzeigen für Beiträge oder Einsteller.</p>
+        <p class="antipattern-because"><strong>Weil:</strong> Likes erzeugen Statuswettbewerb. Sie machen aus Begegnung Performance. Korrespondenz: Facebook, Instagram.</p>
+      </article>
+
+      <article class="antipattern">
+        <div class="antipattern-head">
+          <span class="antipattern-num">Anti 02</span>
+          <h4>Follower, Subscriptions, Connection-Counts</h4>
+        </div>
+        <p class="antipattern-text">Keine Möglichkeit, einer Person, einem Verein oder einem Betrieb dauerhaft zu folgen.</p>
+        <p class="antipattern-because"><strong>Weil:</strong> Follower erzeugen Hierarchie. Sie etablieren <em>Influencer</em> in einem Raum, in dem Gleichwürdigkeit gelten muss. Korrespondenz: Twitter, Instagram, LinkedIn.</p>
+      </article>
+
+      <article class="antipattern">
+        <div class="antipattern-head">
+          <span class="antipattern-num">Anti 03</span>
+          <h4>Ungelesen-Markierung bei Antworten</h4>
+        </div>
+        <p class="antipattern-text">Niemals anzeigen, ob der Empfänger eine Antwort gelesen hat oder nicht.</p>
+        <p class="antipattern-because"><strong>Weil:</strong> Lesebestätigungen erzeugen soziale Schuld und Erwartungsdruck. Sie machen aus einem Anliegen eine Verpflichtung. Korrespondenz: WhatsApp, Telegram.</p>
+      </article>
+
+      <article class="antipattern">
+        <div class="antipattern-head">
+          <span class="antipattern-num">Anti 04</span>
+          <h4>Endlos-Scroll und Auto-Refresh</h4>
+        </div>
+        <p class="antipattern-text">Listen haben endliche Länge. Niemals automatisches Nachladen oder periodische Aktualisierung.</p>
+        <p class="antipattern-because"><strong>Weil:</strong> Endlos-Scroll macht aus Suche eine Sucht. Korrespondenz: TikTok, Instagram-Feed, Twitter.</p>
+      </article>
+
+      <article class="antipattern">
+        <div class="antipattern-head">
+          <span class="antipattern-num">Anti 05</span>
+          <h4>Push-Notifications für neue Inhalte</h4>
+        </div>
+        <p class="antipattern-text">Push-Benachrichtigungen sind nur erlaubt für Antworten auf eigene Anliegen. Niemals für <em>Neue Anliegen in deiner Nähe</em>, <em>Trending</em>, <em>Vorgeschlagene Inhalte</em>.</p>
+        <p class="antipattern-because"><strong>Weil:</strong> Solche Pushes sind Aufmerksamkeitsdiebstahl. Sie machen aus einem Service einen Anrufer. Korrespondenz: alle Social-Media-Apps.</p>
+      </article>
+
+      <article class="antipattern">
+        <div class="antipattern-head">
+          <span class="antipattern-num">Anti 06</span>
+          <h4>Gamification</h4>
+        </div>
+        <p class="antipattern-text">Keine Punkte, Abzeichen, Streaks, Levels, Erfolgs-Animationen über das einfache Bestätigen einer Aktion hinaus.</p>
+        <p class="antipattern-because"><strong>Weil:</strong> Gamification verkauft Verhalten als Spiel. Demokratische Begegnung ist kein Spiel. Korrespondenz: Duolingo, Strava, Foursquare.</p>
+      </article>
+
+      <article class="antipattern">
+        <div class="antipattern-head">
+          <span class="antipattern-num">Anti 07</span>
+          <h4>Personalisierte Feeds und Empfehlungen</h4>
+        </div>
+        <p class="antipattern-text">Keine algorithmische Sortierung nach <em>Relevanz für dich</em>. Keine Empfehlungssysteme.</p>
+        <p class="antipattern-because"><strong>Weil:</strong> Personalisierung erfordert Profilbildung. Profilbildung verstößt gegen den Grundsatz der Datensparsamkeit. Korrespondenz: alle großen Plattformen.</p>
+      </article>
+
+      <article class="antipattern">
+        <div class="antipattern-head">
+          <span class="antipattern-num">Anti 08</span>
+          <h4>Bilder als Veröffentlichung</h4>
+        </div>
+        <p class="antipattern-text">Hochgeladene Bilder dienen ausschließlich der KI-Wiedererkennung. Sie werden niemals öffentlich angezeigt, niemals in Listen gezeigt, niemals geteilt.</p>
+        <p class="antipattern-because"><strong>Weil:</strong> Sobald Bilder öffentlich sind, beginnt die Performance-Logik. Korrespondenz: Instagram, Pinterest.</p>
+      </article>
+
+      <article class="antipattern">
+        <div class="antipattern-head">
+          <span class="antipattern-num">Anti 09</span>
+          <h4>Bezahlte Sichtbarkeit</h4>
+        </div>
+        <p class="antipattern-text">Niemals kostenpflichtige Hervorhebung, Sponsored-Listings, Promotion. Auch nicht für gemeinnützige Akteure.</p>
+        <p class="antipattern-because"><strong>Weil:</strong> Sobald Sichtbarkeit käuflich ist, verschwindet die Gleichwürdigkeit. Auch wenn nur die Feuerwehr zahlt — die Architektur ist ruiniert. Korrespondenz: Google Ads, Facebook Ads, Yelp.</p>
+      </article>
+
+      <article class="antipattern">
+        <div class="antipattern-head">
+          <span class="antipattern-num">Anti 10</span>
+          <h4>Öffentliche Kommentarspalten</h4>
+        </div>
+        <p class="antipattern-text">Keine offenen Kommentarbereiche unter Anliegen. Antworten sind privat zwischen den Beteiligten.</p>
+        <p class="antipattern-because"><strong>Weil:</strong> Offene Kommentarspalten verwandeln konkrete Anliegen in Meinungskämpfe. Sie bringen Eskalations-Mechanik in einen Raum, der sie verhindern soll. Korrespondenz: alle News-Sites, Reddit, YouTube.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────────── REFERENCES ─── -->
+  <section>
+    <div class="container">
+      <div class="section-kicker">Referenzimplementierungen</div>
+      <h2 class="section-title">Beispiele, die diese Guidelines erfüllen.</h2>
+      <p class="section-lead">Zwei Referenzimplementierungen zeigen, wie diese HIG in echte Software übersetzt wird.</p>
+
+      <div class="examples">
+        <article class="example-card">
+          <div class="example-tag">Modul · Fundbüro</div>
+          <h3>Fundbüro Föhr-Amrum</h3>
+          <p>Strukturierte Fundmeldung mit Emoji-Kategorien, optionaler KI-Bildwiedererkennung, ablaufenden Einträgen und privatem Kontakt. Vollständige Implementierung der HIG.</p>
+          <ul class="example-features">
+            <li>Vorauswahl statt Freitext</li>
+            <li>Emoji-Vokabular für 12 Kategorien</li>
+            <li>Bilder nur zum KI-Abgleich</li>
+            <li>Sprach- und Texteingabe</li>
+            <li>Status-Chips für Lebenszyklus</li>
+            <li>Trust-Badges für Datenschutz</li>
+          </ul>
+        </article>
+
+        <article class="example-card">
+          <div class="example-tag">Modul · Bürgerservice</div>
+          <h3>Bürgerservice Schleswig-Holstein</h3>
+          <p>Übersicht aller Bürgerplätze im Land, mit Wappen-SVG der Kommunen, Live-Daten, kuratierten Nachrichten und Sprachsuche. Demonstriert Skalierung der HIG auf Landesebene.</p>
+          <ul class="example-features">
+            <li>Föhrer Wappen als SVG-Vokabular</li>
+            <li>Live-Daten aus öffentlichen Quellen</li>
+            <li>Spracheingabe als Erstklasse-Eingabe</li>
+            <li>Notification-Center für eigene Anliegen</li>
+            <li>Mehrsprachige Kategorienauswahl</li>
+            <li>Erfolgs-Widget ohne Gamification</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────────── QUOTE ─── -->
+  <section>
+    <div class="container">
+      <blockquote class="quote-block">
+        <p>Die Grammatik des Bürgerplatzes ist nicht verhandelbar. Wer sie nicht erfüllt, baut etwas anderes.</p>
+        <small>Das ist die Bedingung, unter der das Wort <em>Bürgerplatz</em> seinen Sinn behält — wie das Wort <em>Bio</em> bei Lebensmitteln.</small>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────────── COMPLIANCE ─── -->
+  <section id="compliance">
+    <div class="container-narrow">
+      <div class="section-kicker">Compliance</div>
+      <h2 class="section-title">Die Prüfliste.</h2>
+      <p class="section-lead">Eine konkrete Software ist ein Bürgerplatz, wenn sie diese Punkte erfüllt. Dies ist die Compliance-Schicht der HIG.</p>
+
+      <div class="compliance">
+        <div class="compliance-item">
+          <span class="compliance-num">01</span>
+          <span class="compliance-text">Lesen, Suchen und Orientieren funktioniert ohne Nutzerkonto.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">02</span>
+          <span class="compliance-text">Kein Tracking-Skript, keine Analytics von Drittanbietern.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">03</span>
+          <span class="compliance-text">Keine Werbung, keine bezahlte Sichtbarkeit, kein Sponsored Content.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">04</span>
+          <span class="compliance-text">Kein Algorithmus für personalisierte Sichtbarkeit.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">05</span>
+          <span class="compliance-text">Keine Likes, Follower, Reactions, Rankings.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">06</span>
+          <span class="compliance-text">Eingaben sind strukturiert: Kategorie, Ort, Zeit, Status statt Freitext-Posts.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">07</span>
+          <span class="compliance-text">Jeder Eintrag hat ein Ablaufdatum.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">08</span>
+          <span class="compliance-text">Hochgeladene Bilder werden nicht öffentlich gezeigt.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">09</span>
+          <span class="compliance-text">Antworten zwischen Anliegensteller und Reagierendem sind privat, nicht öffentlich.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">10</span>
+          <span class="compliance-text">WCAG 2.2 AA wird erfüllt.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">11</span>
+          <span class="compliance-text">Spracheingabe ist als gleichwertige Eingabemethode verfügbar.</span>
+          <span class="compliance-state recommended">Empfohlen</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">12</span>
+          <span class="compliance-text">Hosting bei verifiziertem öffentlichem oder gemeinwohlorientiertem Anbieter in der EU.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">13</span>
+          <span class="compliance-text">Quellcode wird der Trägerkommune und beauftragten Auditoren zur Prüfung übergeben.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">14</span>
+          <span class="compliance-text">Push-Benachrichtigungen nur für Antworten auf eigene Anliegen.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">15</span>
+          <span class="compliance-text">Verifizierte öffentliche Datenquellen werden bevorzugt vor User-Generated-Content.</span>
+          <span class="compliance-state recommended">Empfohlen</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">16</span>
+          <span class="compliance-text">Trust-Badges nur mit verifizierbaren, nicht mit Marketing-Behauptungen.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">17</span>
+          <span class="compliance-text">Sprache der Oberfläche folgt der HIG-Voice-und-Tone: Bürger statt Nutzer, Anliegen statt Posts.</span>
+          <span class="compliance-state required">Pflicht</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">18</span>
+          <span class="compliance-text">Funktionsfähigkeit ohne JavaScript für Lesen und Suchen.</span>
+          <span class="compliance-state recommended">Empfohlen</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">19</span>
+          <span class="compliance-text">Druckansicht für jeden Eintrag (analoger Aushang).</span>
+          <span class="compliance-state recommended">Empfohlen</span>
+        </div>
+        <div class="compliance-item">
+          <span class="compliance-num">20</span>
+          <span class="compliance-text">Open-Standards für Datenexport (iCal für Veranstaltungen, GeoJSON für Orte).</span>
+          <span class="compliance-state recommended">Empfohlen</span>
+        </div>
       </div>
 
+      <p class="section-lead" style="margin-top: 32px; max-width: 580px;">Die vollständige Compliance-Checkliste umfasst etwa 100 Punkte. Diese 20 sind die wichtigsten. Eine Software ist <strong>kein Bürgerplatz</strong>, wenn auch nur ein Pflicht-Punkt nicht erfüllt ist.</p>
     </div>
+  </section>
 
-    <div class="manifesto-close">
-      <p class="manifesto-close-text">
-        <span class="manifesto-close-primary">Der Bürger ist nicht das Produkt.</span>
-        <span class="manifesto-close-accent">Der Platz gehört den Bürgern.</span>
-      </p>
+  <!-- ───────────────────────────────────────── FOOTER ─── -->
+  <section>
+    <div class="container-narrow" style="text-align: center;">
+      <h2 class="section-title">Bauen Sie nicht eine bessere Plattform.</h2>
+      <p class="section-lead">Bauen Sie etwas anderes. Etwas, das nicht Aufmerksamkeit, sondern Vertrauen optimiert. Diese Guidelines sind das Werkzeug.</p>
     </div>
+  </section>
 
-    <div class="manifesto-foot">
-      <div class="foot-primary">
-        <span class="foot-item">Eine Bürgerinitiative.</span>
-        <span class="foot-item">Öffentliches Hosting gewünscht.</span>
-        <span class="foot-item">In Schleswig-Holstein entwickelt.</span>
-      </div>
-      <div class="foot-impressum">JD Köhler  ·  Boldixumerstraße 30  ·  25938 Wyk auf Föhr</div>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <strong>Bürgerplatz HIG · v1.0</strong><br>
+      Eine demokratische Grammatik für Software<br>
+      Projektinitiative Bürgerplatz Föhr-Amrum<br>
+      <br>
+      JD Köhler · Boldixumerstraße 30 · 25938 Wyk auf Föhr
     </div>
-
+    <div>
+      Diese HIG ist ein lebendes Dokument.<br>
+      Vorschläge zur Erweiterung gehen<br>
+      an die Projektinitiative.<br>
+      <br>
+      <strong>buergerplatz.de</strong>
+    </div>
   </div>
-</section>
+</footer>
 
-<script>
-(function() {
-'use strict';
-
-/* ════════════════════════════════════════════════════════════════════
-   SCHLESWIG-HOLSTEIN GRADIENT
-   SH Blau → SH Türkis-Blau — staatliches Corporate Design
-   ════════════════════════════════════════════════════════════════════ */
-
-const STOPS = [
-  '#002050 0%',    /* deep SH blue shadow */
-  '#003064 18%',   /* SH Blau (official) */
-  '#003f7f 36%',   /* brighter SH blue */
-  '#00507f 54%',   /* transition */
-  '#006173 72%',   /* Zusatzfarbe 2 — türkis */
-  '#007a87 90%',   /* lighter variant */
-  '#008a95 100%'   /* brightest transition */
-].join(', ');
-
-const hero = document.getElementById('hero');
-const heroFirst = hero.querySelector('.hero-part-first');
-const gradientElements = [
-  heroFirst,
-  ...document.querySelectorAll('.litany-head.is-kein'),
-  ...document.querySelectorAll('.litany-item.is-kein'),
-  ...document.querySelectorAll('.manifesto-close-primary')
-];
-
-function paintGradient(angleDeg) {
-  const image = 'linear-gradient(' + angleDeg.toFixed(1) + 'deg, ' + STOPS + ')';
-  for (let i = 0; i < gradientElements.length; i++) {
-    gradientElements[i].style.backgroundImage = image;
-  }
-}
-
-paintGradient(135);
-
-const canHover    = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (canHover && !reduceMotion) {
-  let target = 135, current = 135, raf = null, lastPainted = 135;
-
-  function onMove(e) {
-    const w = window.innerWidth  || document.documentElement.clientWidth;
-    const h = window.innerHeight || document.documentElement.clientHeight;
-    const x = e.clientX / w;
-    const y = e.clientY / h;
-    target = 45 + (x * 0.6 + y * 0.4) * 180;
-    if (raf === null) raf = requestAnimationFrame(tick);
-  }
-
-  function tick() {
-    const diff = target - current;
-    current += diff * 0.09;
-    if (Math.abs(current - lastPainted) > 0.3) {
-      paintGradient(current);
-      lastPainted = current;
-    }
-    if (Math.abs(diff) > 0.1) raf = requestAnimationFrame(tick);
-    else raf = null;
-  }
-
-  window.addEventListener('pointermove', onMove, { passive: true });
-}
-
-if (!canHover && !reduceMotion) {
-  let t = 0;
-  (function drift() {
-    t += 0.0015;
-    paintGradient(135 + Math.sin(t) * 55);
-    requestAnimationFrame(drift);
-  })();
-}
-
-/* ════════════════════════════════════════════════════════════════════
-   REVEAL + SCROLL INDICATOR
-   ════════════════════════════════════════════════════════════════════ */
-
-setTimeout(function() { hero.classList.add('is-revealed'); }, 300);
-
-const scrollIndicator = document.getElementById('scroll-indicator');
-setTimeout(function() { scrollIndicator.classList.add('is-visible'); }, 100);
-
-window.addEventListener('scroll', function() {
-  if (window.scrollY > 40) {
-    scrollIndicator.style.opacity = Math.max(0, 1 - window.scrollY / 200);
-  } else {
-    scrollIndicator.style.opacity = '';
-  }
-}, { passive: true });
-
-/* ════════════════════════════════════════════════════════════════════
-   iOS viewport fallback
-   ════════════════════════════════════════════════════════════════════ */
-
-if (!CSS.supports('height', '100dvh')) {
-  function setVh() {
-    document.documentElement.style.setProperty('--vh', window.innerHeight + 'px');
-  }
-  setVh();
-  window.addEventListener('resize', setVh, { passive: true });
-  window.addEventListener('orientationchange', setVh, { passive: true });
-}
-
-/* ════════════════════════════════════════════════════════════════════
-   Console
-   ════════════════════════════════════════════════════════════════════ */
-
-console.log('%cBürgerplatz.',
-  'color:#003064;font-family:Inter,sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.04em;');
-console.log('%cIm Design des Landes Schleswig-Holstein.',
-  'color:#d4004b;font-family:Inter,sans-serif;font-size:11px;font-weight:500;');
-
-})();
-</script>
 </body>
 </html>
