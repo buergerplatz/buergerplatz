@@ -106,7 +106,7 @@
       linear-gradient(135deg,#5e7ce8,#2da8f4);
     background-size:100% 120px, 120px 100%, 100% 100%, 100% 100%;
     border:0;
-    border-radius:var(--rXL);
+    border-radius:34px;
     box-shadow:none;
     padding:clamp(38px,6vw,76px);
     color:#071a8c;
@@ -130,7 +130,7 @@
     margin-top:22px;
     background:#fff;
     border:0;
-    border-radius:var(--rLG);
+    border-radius:34px;
     box-shadow:none;
     padding:22px 24px;
     text-align:left;
@@ -247,7 +247,7 @@
   .text-block {
     background:#fff;
     border:0;
-    border-radius:var(--rXL);
+    border-radius:34px;
     box-shadow:none;
     padding:clamp(28px,4vw,48px);
   }
@@ -266,7 +266,7 @@
     overflow:hidden;
     background:#fff;
     border:0;
-    border-radius:var(--rLG);
+    border-radius:34px;
     box-shadow:none;
   }
   .logic-head {
@@ -412,6 +412,40 @@
   .hero h1, .hero .lead { margin-left:auto; margin-right:auto; }
 
   h1, h2, .section-title { text-align:center; }
+
+
+  .definition,
+  .quote,
+  .movement {
+    border-radius:34px;
+  }
+
+  .quote {
+    margin-top:32px;
+    padding:clamp(38px,6vw,76px);
+  }
+
+  .movement {
+    padding:clamp(46px,7vw,96px);
+  }
+
+  .container > .movement {
+    margin-top:0;
+  }
+
+  section:has(.movement) {
+    padding-top:56px;
+    padding-bottom:56px;
+  }
+
+  .movement h2 {
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .movement p {
+    margin-top:24px;
+  }
 
 </style>
 </head>
