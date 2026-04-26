@@ -292,35 +292,58 @@
   .rules {
     background:#fff;
     border:0;
-    border-radius:var(--rLG);
+    border-radius:32px;
     overflow:hidden;
     box-shadow:none;
   }
   .rule {
-    display:grid;
-    grid-template-columns:72px 1fr;
-    gap:14px;
-    padding:16px 20px;
-    border-bottom:1px solid var(--line);
-  }
-  .rule:last-child { border-bottom:0; }
-  .rule-num { color:var(--soft); font-weight:760; font-size:26px; line-height:1; padding-top:0; }
-  .rule-text { font-size:16px; line-height:1.45; }
-
-  .movement {
     position:relative;
-    overflow:hidden;
-    text-align:center;
-    background:
-      linear-gradient(rgba(7,26,140,.16) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(7,26,140,.16) 1px, transparent 1px),
-      linear-gradient(45deg, transparent calc(50% - .7px), rgba(7,26,140,.16) calc(50% - .7px), rgba(7,26,140,.16) calc(50% + .7px), transparent calc(50% + .7px)),
-      linear-gradient(135deg,#5e7ce8,#2da8f4);
-    background-size:100% 120px, 120px 100%, 100% 100%, 100% 100%;
-    color:#071a8c;
-    border-radius:var(--rXL);
-    box-shadow:none;
-    padding:clamp(46px,7vw,96px);
+    display:grid;
+    grid-template-columns:88px minmax(0,1fr);
+    column-gap:32px;
+    align-items:center;
+    min-height:104px;
+    padding:0 48px;
+    border-bottom:0;
+  }
+  .rule:not(:last-child)::after {
+    content:"";
+    position:absolute;
+    left:48px;
+    right:48px;
+    bottom:0;
+    height:1px;
+    background:rgba(0,0,0,.10);
+  }
+  .rule-num {
+    color:#8e8e93;
+    font-weight:760;
+    font-size:42px;
+    line-height:1;
+    text-align:left;
+    font-variant-numeric:tabular-nums;
+    letter-spacing:-.03em;
+  }
+  .rule-text {
+    color:var(--text);
+    font-size:22px;
+    line-height:1.36;
+    letter-spacing:-.012em;
+    max-width:920px;
+  }
+  @media (max-width:680px) {
+    .rule {
+      grid-template-columns:44px minmax(0,1fr);
+      column-gap:18px;
+      min-height:88px;
+      padding:0 24px;
+    }
+    .rule:not(:last-child)::after {
+      left:24px;
+      right:24px;
+    }
+    .rule-num { font-size:30px; }
+    .rule-text { font-size:17px; }
   }
   .movement h2 {
     margin:0 auto;
@@ -490,12 +513,12 @@
         <article class="card">
           <div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 48h40"/><path d="M18 48V26l14-10 14 10v22"/><path d="M26 48V34h12v14"/></svg></div>
           <h3>Bürgerplatz</h3>
-          <p>Dort bin ich noch kein Vorgang. Ich suche Hilfe, finde etwas, lade ein oder orientiere mich im Ort.</p>
+          <p>Hier bin ich weder Vorgang noch profitgetrieben. Hier bin ich Bürger, der anderen Bürgern begegnet.</p>
         </article>
         <article class="card">
           <div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="14" y="16" width="36" height="28" rx="5"/><path d="M22 52h20M32 44v8"/><path d="M22 25h20M22 33h12"/></svg></div>
           <h3>Private Plattformen</h3>
-          <p>Private Plattformen, Bürgerdienste und Fachverfahren bleiben wichtig. Der Bürgerplatz ergänzt sie um den öffentlichen Raum der Kommune.</p>
+          <p>Dort bin ich Teil bekannter Wirtschaftsmechanismen: profitorientiert, datenausgewertet und eingebunden in eine Aufmerksamkeitsökonomie.</p>
         </article>
       </div>
     </div>
@@ -533,21 +556,22 @@
     <div class="narrow">
       <div class="kicker">Welche Eigenschaften machen einen Platz zum Bürgerplatz?</div>
       <h2 class="section-title">Software entlang demokratischer Regeln</h2>
+      <p class="section-lead">Welche Eigenschaften machen einen Platz zum Bürgerplatz?</p>
       <div class="rules">
-        <div class="rule"><span class="rule-num">01</span><span class="rule-text">Lesen, suchen und orientieren funktioniert ohne Nutzerkonto.</span></div>
-        <div class="rule"><span class="rule-num">02</span><span class="rule-text">Es gibt kein Tracking und keine Verhaltensprofile.</span></div>
-        <div class="rule"><span class="rule-num">03</span><span class="rule-text">Sichtbarkeit wird nicht verkauft. Es gibt keine Werbung.</span></div>
-        <div class="rule"><span class="rule-num">04</span><span class="rule-text">Es gibt keine Likes, Follower, Rankings oder Reichweitenwettbewerbe.</span></div>
-        <div class="rule"><span class="rule-num">05</span><span class="rule-text">Sichtbarkeit folgt Ort, Zeit, Kategorie und nachvollziehbaren Regeln.</span></div>
-        <div class="rule"><span class="rule-num">06</span><span class="rule-text">Einträge haben einen Zweck und verschwinden wieder, wenn ihre Zeit vorbei ist.</span></div>
-        <div class="rule"><span class="rule-num">07</span><span class="rule-text">Antworten sollen helfen, nicht eskalieren. Deshalb gibt es keine offene Kommentarspalte als Grundform.</span></div>
+        <div class="rule"><span class="rule-num">1</span><span class="rule-text">Lesen, suchen und orientieren funktioniert ohne Nutzerkonto.</span></div>
+        <div class="rule"><span class="rule-num">2</span><span class="rule-text">Es gibt kein Tracking und keine Verhaltensprofile.</span></div>
+        <div class="rule"><span class="rule-num">3</span><span class="rule-text">Sichtbarkeit wird nicht verkauft. Es gibt keine Werbung.</span></div>
+        <div class="rule"><span class="rule-num">4</span><span class="rule-text">Es gibt keine Likes, Follower, Rankings oder Reichweitenwettbewerbe.</span></div>
+        <div class="rule"><span class="rule-num">5</span><span class="rule-text">Sichtbarkeit folgt Ort, Zeit, Kategorie und nachvollziehbaren Regeln.</span></div>
+        <div class="rule"><span class="rule-num">6</span><span class="rule-text">Einträge haben einen Zweck und verschwinden wieder, wenn ihre Zeit vorbei ist.</span></div>
+        <div class="rule"><span class="rule-num">7</span><span class="rule-text">Antworten sollen helfen, nicht eskalieren. Deshalb gibt es keine offene Kommentarspalte als Grundform.</span></div>
       </div>
     </div>
   </section>
 
   <section id="beispiele">
     <div class="container">
-            <h2 class="section-title">Was kann dort sichtbar werden?</h2>
+            <h2 class="section-title">Was macht der Bürgerplatz sichtbar?</h2>
       <p class="section-lead">Keine großen politischen Fragen. Sondern die kleinen Situationen, in denen Gemeinschaft und Vertrauen entstehen.</p>
       <div class="grid3">
         <article class="card">
@@ -588,7 +612,7 @@
     <div class="container">
       <div class="movement">
         <h2>Öffentliche digitale Räume machen Kommunen unabhängiger. Und Menschen sichtbarer füreinander.</h2>
-        <p>Der Bürgerplatz ist der Name für diesen Versuch: ein Raum, der sich gut anfühlt, weil er nicht verwertet, sondern verbindet.</p>
+        <p>Der Bürgerplatz ist der Name für das Zielbild: ein Raum, der sich gut anfühlt, weil er nicht verwertet, sondern verbindet. Die Basis der demokratischen Gemeinschaft.</p>
       </div>
     </div>
   </section>
@@ -604,8 +628,8 @@
 <footer>
   <div class="container footer-grid">
     <div>
-      <strong>Kontakt</strong><br>
-      JD Koehler<br>
+      <strong>Kontakt:</strong><br>
+      JD Köhler (Entwickler und Designer)<br>
       Boldixumerstrasse 30<br>
       25938 Wyk auf Föhr<br>
       <a href="mailto:jkoehler@gmail.com">jkoehler@gmail.com</a>
