@@ -159,15 +159,7 @@
     font-weight:780;
     margin-bottom:10px;
   }
-  .pressbox p {
-    margin:0;
-    color:var(--text);
-    font-size:clamp(18px,2vw,22px);
-    line-height:1.38;
-    letter-spacing:-.01em;
-  }
-
-  .quote {
+.quote {
     margin-top:28px;
     padding:clamp(30px,4vw,48px);
     border-radius:34px;
@@ -764,13 +756,7 @@
     letter-spacing:-.02em;
     font-weight:760;
   }
-  .context-box p {
-    margin:0 0 16px;
-    color:var(--text);
-    font-size:18px;
-    line-height:1.5;
-  }
-  .context-box p:last-child { margin-bottom:0; }
+.context-box p:last-child { margin-bottom:0; }
   @media (max-width:680px) {
     .context-box {
       padding:28px 24px;
@@ -780,11 +766,7 @@
     .context-box h3 {
       font-size:25px;
     }
-    .context-box p {
-      font-size:18px;
-      line-height:1.45;
-    }
-  }
+}
 
 
   .final p {
@@ -837,17 +819,7 @@
   .rule-text {
     padding-left:0 !important;
   }
-
-
-  .context-box p {
-    font-size:clamp(21px,2.7vw,30px) !important;
-    line-height:1.28 !important;
-    letter-spacing:-.012em !important;
-    font-weight:500 !important;
-  }
-
-
-  .pressbox small {
+.pressbox small {
     font-size:22px !important;
     line-height:1.2 !important;
     font-weight:760 !important;
@@ -859,17 +831,7 @@
   .logic-card li span {
     color:var(--text) !important;
   }
-
-
-  .context-box p {
-    font-size:clamp(21px,2.7vw,30px) !important;
-    line-height:1.28 !important;
-    letter-spacing:-.012em !important;
-    font-weight:500 !important;
-  }
-
-
-  .movement p,
+.movement p,
   .quote span {
     font-size:clamp(32px,3.7vw,56px) !important;
     line-height:1.32 !important;
@@ -914,21 +876,77 @@
     line-height:1.38 !important;
     letter-spacing:-.01em !important;
   }
-
-
-  .context-box p {
-    font-size:23px !important;
-    line-height:1.38 !important;
-    letter-spacing:-.01em !important;
-    font-weight:400 !important;
-  }
-
-
-  .movement p {
+.movement p {
     font-size:clamp(21px,2.7vw,30px) !important;
     line-height:1.28 !important;
     letter-spacing:-.012em !important;
     font-weight:500 !important;
+  }
+
+
+  .context-box p,
+@media (max-width:680px) {
+    .context-box p,
+}
+
+
+  /* Final type and spacing tokens */
+  :root {
+    --body-large-size: clamp(21px, 2.7vw, 30px);
+    --body-large-size-mobile: 22px;
+    --body-large-line: 1.34;
+    --section-to-card-gap: 40px;
+  }
+
+  .context-box p,
+  .pressbox p {
+    color: var(--text) !important;
+    font-size: var(--body-large-size) !important;
+    line-height: var(--body-large-line) !important;
+    letter-spacing: -0.012em !important;
+    font-weight: 500 !important;
+  }
+
+  .section-title {
+    margin-bottom: 16px !important;
+  }
+
+  .section-lead {
+    margin-bottom: var(--section-to-card-gap) !important;
+  }
+
+  .section-title + .context-box,
+  .section-title + .pressbox,
+  .section-title + .text-block,
+  .section-title + .rules,
+  .section-title + .grid2,
+  .section-title + .grid3,
+  .section-title + .logic {
+    margin-top: var(--section-to-card-gap) !important;
+  }
+
+  .section-lead + .context-box,
+  .section-lead + .pressbox,
+  .section-lead + .text-block,
+  .section-lead + .rules,
+  .section-lead + .grid2,
+  .section-lead + .grid3,
+  .section-lead + .logic {
+    margin-top: 0 !important;
+  }
+
+  @media (max-width:680px) {
+    .context-box p,
+    .pressbox p {
+      font-size: var(--body-large-size-mobile) !important;
+      line-height: var(--body-large-line) !important;
+      letter-spacing: -0.012em !important;
+      font-weight: 500 !important;
+    }
+
+    .section-lead {
+      margin-bottom: var(--section-to-card-gap) !important;
+    }
   }
 
 </style>
@@ -965,7 +983,7 @@
             <h2 class="section-title">Warum brauche ich den Bürgerplatz?</h2>
       <div class="context-box">
         <h3 class="context-title">Das Problem</h3>
-        <p>Wenn wir uns die analoge Welt ansehen, finden wir dort Räume, die wir als selbstverständlich betrachten und deren demokratische Qualität wir selten ausdrücklich benennen: Räume, die allen gehören, nicht der Logik der Profiterzielung unterworfen sind und Begegnung ermöglichen. Dort begegnen Menschen einander als Bürgerinnen und Bürger, nicht als Nutzer, Datenpunkte oder Wirtschaftsobjekte. Der Dorfplatz, der Stadtpark, das Gemeindehaus: Orte, an denen Menschen einander als Bürger begegnen, nicht als Nutzer, nicht als Datenpunkte. Die digitale Welt kennt ein solches Äquivalent bislang nicht.</p>
+        <p>Wenn wir uns die analoge Welt ansehen, finden wir öffentliche Räume, die wir als selbstverständlich betrachten: den Dorfplatz, den Stadtpark, das Gemeindehaus, den Aushang. Sie gehören nicht einem Unternehmen. Sie sind nicht auf Profiterzielung angelegt. Sie ermöglichen Begegnung, Orientierung und Teilhabe. Dort begegnen Menschen einander als Bürgerinnen und Bürger. In der digitalen Welt fehlt ein solches öffentliches Äquivalent bislang weitgehend.</p>
       </div>
       <div class="pressbox">
         <small>Demokratische Wirkung</small>
@@ -981,17 +999,17 @@
         <article class="card">
           <div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="28" cy="28" r="16"/><path d="M40 40l12 12"/></svg></div>
           <h3>Etwas gefunden. Etwas verloren.</h3>
-          <p>Wenn am Strand ein iPhone auftaucht, landet die Fundmeldung heute oft in einer geschlossenen Gruppe. Sie erreicht nur, wer zufällig Mitglied ist. Der Gast, der in drei Tagen abreist, erfährt es vielleicht nie. Was allen helfen sollte, bleibt in einem Teilraum verborgen.</p>
+          <p>Ein Handy wird gefunden. Die Meldung landet heute oft in einer geschlossenen Gruppe. Sie erreicht nur, wer dort Mitglied ist. Was öffentlich hilfreich wäre, bleibt in einem privaten Teilraum verborgen.</p>
         </article>
         <article class="card">
           <div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 28h36l-4-12H18l-4 12z"/><path d="M18 28v24h28V28"/><path d="M26 52V38h12v14"/></svg></div>
           <h3>Ein Gasthaus, das gefunden werden will.</h3>
-          <p>Lokale Betriebe sind für Sichtbarkeit oft auf Plattformen angewiesen. Die Tageskarte steht auf Instagram, die Öffnungszeiten bei Google, die Empfehlung in einer App. Was für das Gasthaus gilt, gilt auch für Handwerk, Läden, Vereine und Initiativen.</p>
+          <p>Ein lokaler Betrieb möchte Öffnungszeiten, Tageskarte oder Hinweise sichtbar machen. Heute geschieht das häufig über Suchmaschinen, Bewertungsportale oder soziale Plattformen. Sichtbarkeit ist damit an fremde Regeln gebunden.</p>
         </article>
         <article class="card">
           <div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 51S14 40.5 14 26a10 10 0 0 1 18-6 10 10 0 0 1 18 6c0 14.5-18 25-18 25z"/></svg></div>
           <h3>Ein stiller Nachbar.</h3>
-          <p>„Ich brauche diese Woche Hilfe beim Einkaufen.“ Mehr müsste nicht dort stehen. Kein Profil. Keine Mitgliedschaft. Eine Nachbarin drei Häuser weiter liest es und antwortet. So entstand früher Dorfgemeinschaft. Digital fehlt dafür oft der öffentliche Ort.</p>
+          <p>Eine Person braucht Unterstützung beim Einkaufen, beim Ankommen oder bei der Orientierung im Ort. Die Hilfe könnte in der Nachbarschaft vorhanden sein. Aber es fehlt ein öffentlicher digitaler Ort, an dem dieses Anliegen einfach und würdevoll sichtbar werden kann.</p>
         </article>
       </div>
     </div>
@@ -1024,7 +1042,7 @@
         <article class="card">
           <div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="14" y="16" width="36" height="28" rx="5"/><path d="M22 52h20M32 44v8"/><path d="M22 25h20M22 33h12"/></svg></div>
           <h3>Private Plattformen</h3>
-          <p>Dort bin ich Teil bekannter Wirtschaftsmechanismen: profitorientiert, datenausgewertet und eingebunden in eine Aufmerksamkeitsökonomie.</p>
+          <p>Ihre Regeln entstehen aus Geschäftsmodellen, nicht aus kommunaler Verantwortung.</p>
         </article>
       </div>
     </div>
@@ -1041,7 +1059,7 @@
             <li><b>Signal</b><span>Like, Follower, Reichweite</span></li>
             <li><b>Ordnung</b><span>Algorithmus</span></li>
             <li><b>Ziel</b><span>Aufmerksamkeit</span></li>
-            <li><b>Wert</b><span>Daten und Verweildauer</span></li>
+            <li><b>Wert</b><span>Reichweite und Verweildauer</span></li>
           </ul>
         </article>
         <article class="logic-card good">
@@ -1113,8 +1131,8 @@
         </article>
         <article class="card">
           <div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M20 10h18l10 10v34H20V10z"/><path d="M38 10v12h10"/><path d="M26 32h16M26 40h16"/></svg></div>
-          <h3>Formularhilfe</h3>
-          <p>Vor dem Antrag steht oft eine Alltagssituation. Der Bürgerplatz macht Hilfe sichtbar, bevor ein Verfahren beginnt.</p>
+          <h3>Ankommen</h3>
+          <p>Neue Menschen, Gäste oder Zugezogene finden öffentliche Hinweise, Kontakte, Vereine, Hilfen und Orientierung im Ort.</p>
         </article>
         <article class="card">
           <div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22"/><path d="M40 20l-6 18-10 6 6-18 10-6z"/></svg></div>
